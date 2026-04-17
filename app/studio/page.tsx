@@ -2,27 +2,29 @@ import { ImageGenerator } from '@/app/components/ImageGenerator'
 
 export default function StudioPage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-slate-700 mb-8">
-        <div className="max-w-4xl mx-auto px-8 py-6">
-          <a href="/" className="text-gray-400 hover:text-white text-sm mb-4 inline-block">
-            ← Back to Home
+      <header className="border-b border-gray-200 sticky top-0 bg-white">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <a href="/" className="text-2xl font-bold hover:text-gray-700">
+            ContentForge
           </a>
-          <h1 className="text-3xl font-bold">ContentForge Studio</h1>
-          <p className="text-gray-400 text-sm mt-1">Create beautiful images with AI</p>
+          <a href="/" className="text-gray-600 hover:text-gray-900">
+            ← Back
+          </a>
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-8 pb-12">
-        <ImageGenerator />
+      {/* Main */}
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="max-w-2xl">
+          <h1 className="text-4xl font-bold mb-2">Create content</h1>
+          <p className="text-gray-600 mb-8">
+            Write what you want. AI creates it. Simple as that.
+          </p>
+          <ImageGenerator />
+        </div>
       </div>
-
-      {/* Footer Tips */}
-      <footer className="max-w-4xl mx-auto px-8 py-8 text-xs text-gray-500 border-t border-slate-700">
-        <p>💡 Tip: Be specific in your description for better results. Example: "A motivational quote about success with neon lights in the background"</p>
-      </footer>
     </main>
   )
 }
