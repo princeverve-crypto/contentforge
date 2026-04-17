@@ -2,16 +2,26 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { caption, style, format } = await request.json()
+    const { caption, style = 'professional', format = 'tiktok', autoPost = false } = await request.json()
 
-    if (!caption) {
+    if (!caption || caption.trim().length === 0) {
       return NextResponse.json(
-        { error: 'Caption is required' },
+        { error: 'Please describe what you want to create' },
         { status: 400 }
       )
     }
 
-    const prompt = `${style} style professional design: "${caption}". High quality, vibrant, eye-catching, perfect for social media.`
+    const replicateToken = process.env.REPLICATE_API_TOKEN
+    if (!replicateToken) {
+      console.error('REPLICATE_API_TOKEN not configured')
+      return NextResponse.json(
+        { error: 'Image generation service not configured. Please add REPLICATE_API_TOKEN to environment variables.' },
+        { status: 500 }
+      )
+    }
+
+    // Enhance prompt
+    const prompt = `Create a ${style} professional design for social media. Text: "${caption}". High quality, vibrant, eye-catching, modern, engaging. Perfect for TikTok, Instagram, YouTube.`
 
     const sizes: Record<string, string> = {
       tiktok: '1080x1920',
@@ -20,26 +30,17 @@ export async function POST(request: NextRequest) {
       square: '1080x1080'
     }
 
-    const apiToken = process.env.REPLICATE_API_TOKEN
-
-    if (!apiToken) {
-      return NextResponse.json(
-        { error: 'API token not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Call Replicate API for FLUX
-    const res = await fetch('https://api.replicate.com/v1/predictions', {
+    // Call Replicate FLUX model
+    const generateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${apiToken}`,
+        'Authorization': `Bearer ${replicateToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         version: 'black-forest-labs/flux-pro',
         input: {
-          prompt,
+          prompt: prompt,
           image_size: sizes[format] || '1080x1920',
           num_inference_steps: 28,
           guidance_scale: 7.5
@@ -47,58 +48,103 @@ export async function POST(request: NextRequest) {
       })
     })
 
-    const data = await res.json()
-
-    if (!res.ok) {
+    if (!generateRes.ok) {
+      const error = await generateRes.text()
+      console.error('Replicate API error:', error)
       return NextResponse.json(
-        { error: data.error || 'API error' },
+        { error: 'Failed to start image generation. Check API token.' },
         { status: 500 }
       )
     }
 
-    // Poll for completion
-    let prediction = data
-    let attempts = 0
-    const maxAttempts = 60
+    const prediction = await generateRes.json()
 
-    while (
-      prediction.status === 'processing' &&
-      attempts < maxAttempts
-    ) {
+    if (!prediction.id) {
+      console.error('No prediction ID returned')
+      return NextResponse.json(
+        { error: 'Image generation service error' },
+        { status: 500 }
+      )
+    }
+
+    // Poll for completion (max 120 seconds)
+    let result = prediction
+    let attempts = 0
+    const maxAttempts = 120
+
+    while (result.status === 'processing' && attempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 1000))
 
       const checkRes = await fetch(
         `https://api.replicate.com/v1/predictions/${prediction.id}`,
         {
-          headers: { Authorization: `Bearer ${apiToken}` }
+          headers: { 'Authorization': `Bearer ${replicateToken}` }
         }
       )
 
-      prediction = await checkRes.json()
+      if (!checkRes.ok) {
+        console.error('Error checking prediction status')
+        return NextResponse.json(
+          { error: 'Error generating image' },
+          { status: 500 }
+        )
+      }
+
+      result = await checkRes.json()
       attempts++
     }
 
-    if (prediction.status !== 'succeeded') {
+    if (result.status !== 'succeeded') {
+      console.error('Generation failed:', result.error)
       return NextResponse.json(
-        { error: 'Image generation failed' },
+        { error: `Image generation ${result.status}` },
         { status: 500 }
       )
     }
 
-    const imageUrl = prediction.output?.[0] || prediction.output
+    const imageUrl = result.output?.[0] || result.output
 
     if (!imageUrl) {
+      console.error('No image URL in response')
       return NextResponse.json(
-        { error: 'No image generated' },
+        { error: 'Image generation succeeded but no URL returned' },
         { status: 500 }
       )
     }
 
-    return NextResponse.json({ imageUrl })
+    // Auto-post to Postiz if enabled
+    if (autoPost) {
+      try {
+        const postizRes = await fetch('https://app.postiz.com/api/integrations', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.POSTIZ_API_KEY || ''}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            caption: caption,
+            image_url: imageUrl,
+            platforms: ['tiktok', 'instagram', 'youtube']
+          })
+        })
+
+        if (postizRes.ok) {
+          console.log('Posted to Postiz successfully')
+        }
+      } catch (postError) {
+        console.log('Postiz auto-post attempted (error acceptable)')
+      }
+    }
+
+    return NextResponse.json({
+      imageUrl,
+      success: true,
+      message: 'Image created successfully'
+    })
   } catch (error: any) {
-    console.error('Generation error:', error)
+    console.error('API error:', error)
     return NextResponse.json(
-      { error: error.message || 'Internal error' },
+      { error: error.message || 'Internal server error' },
       { status: 500 }
     )
   }
