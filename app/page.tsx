@@ -1,103 +1,87 @@
+'use client'
+
 export default function Home() {
   return (
-    <main style={{ background: 'linear-gradient(to bottom right, #0f172a, #1e293b, #000000)' }} className="min-h-screen text-white">
+    <main style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)', minHeight: '100vh', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      {/* Background gradient blobs */}
+      <div style={{ position: 'fixed', inset: 0, zIndex: -1, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(40px)' }}></div>
+        <div style={{ position: 'absolute', bottom: '-20%', left: '10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(40px)' }}></div>
+      </div>
+
       {/* Navigation */}
-      <nav style={{ background: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }} className="sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          <div className="text-3xl font-bold tracking-tight">
-            <span style={{ backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6, #a855f7)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
-              ContentForge
-            </span>
+      <nav style={{ borderBottom: '1px solid rgba(148, 163, 184, 0.1)', backdropFilter: 'blur(10px)', background: 'rgba(15, 23, 42, 0.4)' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ fontSize: '28px', fontWeight: 'bold', letterSpacing: '-0.5px' }}>
+            Content<span style={{ background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Forge</span>
           </div>
-          <a 
-            href="/studio" 
-            style={{ background: 'linear-gradient(to right, #0ea5e9, #3b82f6)' }}
-            className="px-6 py-2.5 rounded-full font-semibold text-sm transition hover:opacity-90 shadow-lg"
-          >
-            Get Started
+          <a href="/studio" style={{ background: 'linear-gradient(120deg, #3b82f6, #1e40af)', color: 'white', padding: '12px 24px', borderRadius: '8px', fontWeight: '600', textDecoration: 'none', fontSize: '15px', transition: 'all 0.3s', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)', cursor: 'pointer', display: 'inline-block' }}>
+            Start Creating →
           </a>
         </div>
       </nav>
 
-      {/* Background Effects */}
-      <div style={{ position: 'fixed', inset: 0, zIndex: -10, pointerEvents: 'none' }}>
-        <div style={{ position: 'absolute', top: '0%', left: '25%', width: '400px', height: '400px', background: 'rgba(59, 130, 246, 0.15)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
-        <div style={{ position: 'absolute', bottom: '25%', right: '25%', width: '400px', height: '400px', background: 'rgba(168, 85, 247, 0.15)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
-      </div>
+      {/* Hero Section */}
+      <section style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ marginBottom: '24px' }}>
+          <span style={{ display: 'inline-block', padding: '8px 16px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '20px', fontSize: '13px', fontWeight: '600', color: '#60a5fa', letterSpacing: '0.5px' }}>
+            ✨ AI-POWERED AUTOMATION
+          </span>
+        </div>
 
-      {/* Hero */}
-      <section className="relative py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div style={{ marginBottom: '32px' }}>
-            <span style={{ display: 'inline-block', padding: '8px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '9999px', fontSize: '14px', fontWeight: '600', marginBottom: '24px', backdropFilter: 'blur(4px)' }}>
-              ✨ AI-Powered Creation
-            </span>
-          </div>
+        <h1 style={{ fontSize: '56px', fontWeight: 'bold', lineHeight: '1.1', marginBottom: '24px', maxWidth: '800px', margin: '0 auto 24px' }}>
+          Create Content.
+          <br />
+          <span style={{ background: 'linear-gradient(120deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            Post Everywhere.
+          </span>
+          <br />
+          Make Money.
+        </h1>
 
-          <h1 className="text-7xl md:text-8xl font-bold tracking-tight leading-tight mb-8">
-            <div style={{ backgroundImage: 'linear-gradient(to right, #ffffff, #06b6d4)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
-              Create
+        <p style={{ fontSize: '18px', color: '#cbd5e1', maxWidth: '600px', margin: '0 auto 48px', lineHeight: '1.6' }}>
+          Generate stunning images in seconds. Automatically post to TikTok, Instagram, and YouTube. Scale your content empire with AI.
+        </p>
+
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '64px' }}>
+          <a href="/studio" style={{ background: 'linear-gradient(120deg, #3b82f6, #1e40af)', color: 'white', padding: '16px 32px', borderRadius: '8px', fontWeight: '600', textDecoration: 'none', fontSize: '16px', transition: 'all 0.3s', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)', cursor: 'pointer', display: 'inline-block' }}>
+            Launch Studio
+          </a>
+          <button style={{ background: 'rgba(148, 163, 184, 0.1)', color: '#cbd5e1', padding: '16px 32px', borderRadius: '8px', fontWeight: '600', border: '1px solid rgba(148, 163, 184, 0.2)', fontSize: '16px', cursor: 'pointer', transition: 'all 0.3s' }}>
+            Learn More
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginTop: '64px', paddingTop: '64px', borderTop: '1px solid rgba(148, 163, 184, 0.1)' }}>
+          {[{ value: '10K+', label: 'Images Created' }, { value: '1000+', label: 'Active Users' }, { value: '500K+', label: 'Posts Generated' }].map((stat, i) => (
+            <div key={i} style={{ padding: '24px', background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)', borderRadius: '12px', transition: 'all 0.3s', cursor: 'pointer' }}>
+              <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#3b82f6', marginBottom: '8px' }}>{stat.value}</div>
+              <div style={{ fontSize: '14px', color: '#94a3b8' }}>{stat.label}</div>
             </div>
-            <div style={{ backgroundImage: 'linear-gradient(to right, #0ea5e9, #a855f7, #ec4899)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent', marginTop: '8px' }}>
-              Beautiful
-            </div>
-            <div style={{ color: '#ffffff', marginTop: '8px' }}>Content</div>
-          </h1>
-
-          <p className="text-xl text-gray-300 max-w-2xl leading-relaxed mb-8">
-            Write what you want. AI creates it instantly. Download, share, or auto-post to all platforms.
-          </p>
-
-          <div className="flex gap-4 mb-20">
-            <a
-              href="/studio"
-              style={{ background: 'linear-gradient(to right, #0ea5e9, #3b82f6)' }}
-              className="px-8 py-4 rounded-full font-bold transition hover:opacity-90 shadow-xl"
-            >
-              Launch Studio →
-            </a>
-            <button style={{ border: '1px solid rgba(255, 255, 255, 0.2)' }} className="px-8 py-4 rounded-full font-bold transition hover:bg-white/10 backdrop-blur">
-              Watch Demo
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { number: '10K+', text: 'Images Created' },
-              { number: '10s', text: 'Generation' },
-              { number: '99%', text: 'Happy Users' }
-            ].map((stat) => (
-              <div key={stat.text} style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '24px', backdropFilter: 'blur(10px)', transition: 'all 0.3s ease' } as any} className="hover:bg-white/10 hover:border-white/20">
-                <div style={{ backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent', fontSize: '32px', fontWeight: 'bold', marginBottom: '8px' }}>
-                  {stat.number}
-                </div>
-                <div className="text-gray-400 font-medium">{stat.text}</div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }} className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl font-bold mb-16 text-center" style={{ backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
+      {/* How It Works */}
+      <section style={{ padding: '80px 24px', background: 'rgba(30, 41, 59, 0.3)', borderTop: '1px solid rgba(148, 163, 184, 0.1)', borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center', marginBottom: '64px' }}>
             How It Works
           </h2>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '32px' }}>
             {[
-              { num: '01', title: 'Write', desc: 'Describe your vision', icon: '✏️' },
-              { num: '02', title: 'Select Format', desc: 'Choose platform', icon: '🎬' },
-              { num: '03', title: 'Generate', desc: 'AI creates instantly', icon: '⚡' },
-              { num: '04', title: 'Share', desc: 'Post everywhere', icon: '📤' }
-            ].map((step) => (
-              <div key={step.num} style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '32px', transition: 'all 0.3s ease' }} className="hover:bg-white/10 hover:border-white/20">
-                <div className="text-4xl mb-4">{step.icon}</div>
-                <div style={{ color: '#06b6d4', fontSize: '14px', fontWeight: 'bold', marginBottom: '8px' }}>{step.num}</div>
-                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                <p className="text-gray-400 text-sm">{step.desc}</p>
+              { num: '01', title: 'Describe', desc: 'Write what you want to create in plain language', icon: '✏️' },
+              { num: '02', title: 'Generate', desc: 'AI creates stunning images in 10-20 seconds', icon: '⚡' },
+              { num: '03', title: 'Post', desc: 'Auto-post to TikTok, Instagram, YouTube', icon: '📤' },
+              { num: '04', title: 'Earn', desc: 'Monetize your content with our credit system', icon: '💰' }
+            ].map((step, i) => (
+              <div key={i} style={{ padding: '32px', background: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)', borderRadius: '12px', transition: 'all 0.3s', cursor: 'pointer' }}>
+                <div style={{ fontSize: '40px', marginBottom: '16px' }}>{step.icon}</div>
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#60a5fa', marginBottom: '8px', letterSpacing: '1px' }}>{step.num}</div>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px' }}>{step.title}</h3>
+                <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: '1.6' }}>{step.desc}</p>
               </div>
             ))}
           </div>
@@ -105,30 +89,32 @@ export default function Home() {
       </section>
 
       {/* Pricing */}
-      <section style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }} className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl font-bold mb-16 text-center" style={{ backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
+      <section style={{ padding: '80px 24px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '40px', fontWeight: 'bold', textAlign: 'center', marginBottom: '64px' }}>
             Simple Pricing
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
             {[
-              { name: 'Free', price: '$0', desc: '5/month', features: ['Basic', 'Community'] },
-              { name: 'Creator', price: '$29', desc: '100/month', features: ['Priority', 'Auto-post'], highlight: true },
-              { name: 'Pro', price: '$99', desc: 'Unlimited', features: ['Team', 'Support'] }
-            ].map((plan) => (
-              <div key={plan.name} style={plan.highlight ? { background: 'linear-gradient(to right, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))', border: '1px solid rgba(6, 182, 212, 0.5)', boxShadow: '0 20px 25px -5px rgba(59, 130, 246, 0.1)' } : { background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)' }} className="relative p-8 rounded-2xl backdrop-blur transition hover:border-white/20 hover:bg-white/8">
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold mb-1">{plan.price}</div>
-                <p className="text-gray-400 text-sm mb-6">{plan.desc}</p>
-                <ul className="space-y-2 mb-8">
-                  {plan.features.map((f) => (
-                    <li key={f} className="text-sm flex items-center gap-2 text-gray-300">
-                      <span style={{ color: '#06b6d4' }}>✓</span> {f}
+              { name: 'Free', price: '$0', desc: 'Get started', credits: '5/month', features: ['Basic generation', 'Community support'], highlight: false },
+              { name: 'Creator', price: '$29', desc: 'Most popular', credits: '100/month', features: ['All features', 'Priority support', 'Auto-post', 'Analytics'], highlight: true },
+              { name: 'Pro', price: '$99', desc: 'For teams', credits: 'Unlimited', features: ['Everything', 'Team access', '24/7 support', 'API access'], highlight: false }
+            ].map((plan, i) => (
+              <div key={i} style={{ padding: '40px', background: plan.highlight ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.05))' : 'rgba(30, 41, 59, 0.3)', border: plan.highlight ? '2px solid rgba(59, 130, 246, 0.5)' : '1px solid rgba(148, 163, 184, 0.1)', borderRadius: '12px', transition: 'all 0.3s', position: 'relative', cursor: 'pointer' }}>
+                {plan.highlight && <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold' }}>POPULAR</div>}
+                <h3 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>{plan.name}</h3>
+                <p style={{ fontSize: '14px', color: '#94a3b8', marginBottom: '24px' }}>{plan.desc}</p>
+                <div style={{ fontSize: '40px', fontWeight: 'bold', marginBottom: '8px' }}>{plan.price}</div>
+                <p style={{ fontSize: '14px', color: '#60a5fa', fontWeight: '600', marginBottom: '32px' }}>{plan.credits} images</p>
+                <ul style={{ listStyle: 'none', padding: 0, marginBottom: '32px' }}>
+                  {plan.features.map((f, j) => (
+                    <li key={j} style={{ fontSize: '14px', color: '#cbd5e1', marginBottom: '12px', display: 'flex', gap: '8px' }}>
+                      <span style={{ color: '#60a5fa' }}>✓</span> {f}
                     </li>
                   ))}
                 </ul>
-                <button style={plan.highlight ? { background: 'linear-gradient(to right, #0ea5e9, #3b82f6)' } : { background: 'rgba(255, 255, 255, 0.1)' }} className="w-full py-3 rounded-full font-bold transition hover:opacity-90">
+                <button style={{ width: '100%', padding: '14px', background: plan.highlight ? 'linear-gradient(120deg, #3b82f6, #8b5cf6)' : 'rgba(148, 163, 184, 0.1)', color: plan.highlight ? 'white' : '#cbd5e1', border: plan.highlight ? 'none' : '1px solid rgba(148, 163, 184, 0.2)', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.3s' }}>
                   Get Started
                 </button>
               </div>
@@ -138,25 +124,23 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }} className="py-20 px-6 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-5xl font-bold mb-6">Ready to create?</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Join creators building their content empire with AI.
+      <section style={{ padding: '80px 24px', background: 'rgba(30, 41, 59, 0.3)', borderTop: '1px solid rgba(148, 163, 184, 0.1)', textAlign: 'center' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <h2 style={{ fontSize: '40px', fontWeight: 'bold', marginBottom: '24px' }}>
+            Ready to create?
+          </h2>
+          <p style={{ fontSize: '18px', color: '#cbd5e1', marginBottom: '40px', lineHeight: '1.6' }}>
+            Join creators scaling their content empire with AI automation.
           </p>
-          <a
-            href="/studio"
-            style={{ background: 'linear-gradient(to right, #0ea5e9, #3b82f6)' }}
-            className="inline-block px-8 py-4 rounded-full font-bold transition hover:opacity-90 shadow-xl"
-          >
-            Start Creating Now →
+          <a href="/studio" style={{ display: 'inline-block', background: 'linear-gradient(120deg, #3b82f6, #1e40af)', color: 'white', padding: '16px 40px', borderRadius: '8px', fontWeight: '600', textDecoration: 'none', fontSize: '16px', transition: 'all 0.3s', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)' }}>
+            Launch Studio Now →
           </a>
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }} className="py-12 px-6 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 ContentForge. Built for creators.</p>
+      <footer style={{ padding: '40px 24px', borderTop: '1px solid rgba(148, 163, 184, 0.1)', textAlign: 'center', color: '#64748b', fontSize: '14px' }}>
+        <p>&copy; 2026 ContentForge. Create smarter. Post faster. Earn more.</p>
       </footer>
     </main>
   )

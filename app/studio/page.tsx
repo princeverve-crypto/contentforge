@@ -1,47 +1,47 @@
+'use client'
+
 import { ImageGenerator } from '@/app/components/ImageGenerator'
 
 export default function StudioPage() {
   return (
-    <main style={{ background: 'linear-gradient(to bottom right, #0f172a, #1e293b, #000000)' }} className="min-h-screen text-white">
+    <main style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)', minHeight: '100vh', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {/* Background */}
-      <div style={{ position: 'fixed', inset: 0, zIndex: -10, pointerEvents: 'none' }}>
-        <div style={{ position: 'absolute', top: '0%', left: '25%', width: '400px', height: '400px', background: 'rgba(59, 130, 246, 0.15)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
-        <div style={{ position: 'absolute', bottom: '25%', right: '25%', width: '400px', height: '400px', background: 'rgba(168, 85, 247, 0.15)', borderRadius: '50%', filter: 'blur(80px)' }}></div>
+      <div style={{ position: 'fixed', inset: 0, zIndex: -1, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(40px)' }}></div>
+        <div style={{ position: 'absolute', bottom: '-20%', left: '10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(40px)' }}></div>
       </div>
 
-      {/* Nav */}
-      <nav style={{ background: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }} className="sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          <a href="/" className="text-3xl font-bold tracking-tight">
-            <span style={{ backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6, #a855f7)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
-              ContentForge
-            </span>
+      {/* Header */}
+      <header style={{ borderBottom: '1px solid rgba(148, 163, 184, 0.1)', backdropFilter: 'blur(10px)', background: 'rgba(15, 23, 42, 0.4)' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href="/" style={{ fontSize: '28px', fontWeight: 'bold', textDecoration: 'none', letterSpacing: '-0.5px', cursor: 'pointer' }}>
+            Content<span style={{ background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Forge</span>
           </a>
-          <a href="/" className="text-gray-400 hover:text-gray-200 transition text-sm font-semibold">
-            ← Back
+          <a href="/" style={{ fontSize: '15px', color: '#94a3b8', textDecoration: 'none', transition: 'color 0.3s', cursor: 'pointer' }}>
+            ← Back to Home
           </a>
         </div>
-      </nav>
+      </header>
 
       {/* Content */}
-      <div className="relative min-h-[calc(100vh-80px)] py-16">
-        <div className="max-w-5xl mx-auto px-6">
-          {/* Header */}
-          <div className="mb-12">
-            <h1 className="text-7xl font-bold mb-6 tracking-tight">
-              <span style={{ backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
-                Create
-              </span>
-            </h1>
-            <p className="text-lg text-gray-400">
-              Describe. Generate. Share instantly.
-            </p>
-          </div>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '60px 24px' }}>
+        {/* Title */}
+        <div style={{ marginBottom: '48px' }}>
+          <h1 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '16px', lineHeight: '1.2' }}>
+            Create Your
+            <br />
+            <span style={{ background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              Next Viral Post
+            </span>
+          </h1>
+          <p style={{ fontSize: '16px', color: '#94a3b8', lineHeight: '1.6' }}>
+            Describe what you want. AI creates it. Post instantly to all platforms.
+          </p>
+        </div>
 
-          {/* Card */}
-          <div style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '24px', padding: '32px', backdropFilter: 'blur(10px)', transition: 'all 0.3s ease' }} className="hover:bg-white/8 hover:border-white/20">
-            <ImageGenerator />
-          </div>
+        {/* Generator Card */}
+        <div style={{ padding: '40px', background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)', borderRadius: '16px', backdropFilter: 'blur(10px)' }}>
+          <ImageGenerator />
         </div>
       </div>
     </main>
