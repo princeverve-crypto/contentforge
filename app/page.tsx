@@ -31,7 +31,6 @@ export default function Home() {
 
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '64px' }}>
           <a href="/studio" style={{ background: 'linear-gradient(120deg, #3b82f6, #1e40af)', color: 'white', padding: '16px 32px', borderRadius: '8px', fontWeight: '600', textDecoration: 'none', fontSize: '16px', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)', display: 'inline-block' }}>Launch Studio</a>
-          <button style={{ background: 'rgba(148, 163, 184, 0.1)', color: '#cbd5e1', padding: '16px 32px', borderRadius: '8px', fontWeight: '600', border: '1px solid rgba(148, 163, 184, 0.2)', fontSize: '16px', cursor: 'pointer' }}>Learn More</button>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginTop: '64px', paddingTop: '64px', borderTop: '1px solid rgba(148, 163, 184, 0.1)' }}>
