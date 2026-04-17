@@ -13,7 +13,7 @@ export function ImageGenerator() {
 
   async function generateImage() {
     if (!caption.trim()) {
-      setError('Please describe what you want to create')
+      setError('Please describe what you want')
       setTimeout(() => setError(''), 3000)
       return
     }
@@ -26,25 +26,17 @@ export function ImageGenerator() {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          caption,
-          format,
-          style: 'professional',
-          autoPost
-        })
+        body: JSON.stringify({ caption, format, style: 'professional', autoPost })
       })
 
       const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to generate')
-      }
+      if (!res.ok) throw new Error(data.error)
 
       setImage(data.imageUrl)
       setSuccess(true)
       setTimeout(() => setSuccess(false), 4000)
     } catch (err: any) {
-      setError(err.message || 'Failed to generate image')
+      setError(err.message)
       setTimeout(() => setError(''), 4000)
     } finally {
       setLoading(false)
@@ -52,7 +44,7 @@ export function ImageGenerator() {
   }
 
   return (
-    <div className="space-y-8">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
       {/* Input */}
       <div>
         <label className="block text-sm font-bold text-gray-300 mb-3">
@@ -61,15 +53,16 @@ export function ImageGenerator() {
         <textarea
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="Example: A motivational quote about success with a beautiful gradient background"
-          className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition backdrop-blur min-h-28"
+          placeholder="Example: Motivational quote about success with gradient background"
+          style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', padding: '16px', color: 'white', minHeight: '112px', fontFamily: 'inherit', resize: 'none', transition: 'all 0.3s ease' }}
+          className="w-full placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/10"
         />
       </div>
 
       {/* Format */}
       <div>
         <label className="block text-sm font-bold text-gray-300 mb-3">Format</label>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '12px' }}>
           {[
             { id: 'tiktok', label: 'TikTok' },
             { id: 'instagram', label: 'Instagram' },
@@ -79,11 +72,8 @@ export function ImageGenerator() {
             <button
               key={fmt.id}
               onClick={() => setFormat(fmt.id)}
-              className={`py-3 px-4 rounded-lg font-semibold transition ${
-                format === fmt.id
-                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-blue-500/30'
-                  : 'bg-white/5 border border-white/10 text-gray-300 hover:border-white/20 hover:bg-white/8'
-              }`}
+              style={format === fmt.id ? { background: 'linear-gradient(to right, #0ea5e9, #3b82f6)' } : { background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
+              className="py-3 px-4 rounded-lg font-semibold transition"
             >
               {fmt.label}
             </button>
@@ -92,13 +82,13 @@ export function ImageGenerator() {
       </div>
 
       {/* Auto-Post */}
-      <div className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-lg">
+      <div style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '8px', padding: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
         <input
           type="checkbox"
           id="autopost"
           checked={autoPost}
           onChange={(e) => setAutoPost(e.target.checked)}
-          className="w-4 h-4 accent-cyan-500 cursor-pointer"
+          className="w-4 h-4 cursor-pointer"
         />
         <label htmlFor="autopost" className="text-sm font-semibold text-gray-300 cursor-pointer">
           📤 Auto-post to TikTok, Instagram & YouTube
@@ -109,48 +99,39 @@ export function ImageGenerator() {
       <button
         onClick={generateImage}
         disabled={loading}
-        className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:from-gray-600 disabled:to-gray-700 text-white py-4 rounded-xl font-bold text-lg transition transform hover:scale-105 disabled:hover:scale-100 shadow-lg shadow-blue-500/30"
+        style={{ background: loading || !caption.trim() ? 'rgba(100, 100, 100, 0.3)' : 'linear-gradient(to right, #0ea5e9, #3b82f6)', borderRadius: '12px', padding: '16px', fontWeight: 'bold', fontSize: '18px', transition: 'all 0.3s ease' }}
+        className="w-full text-white hover:opacity-90 disabled:opacity-50"
       >
-        {loading ? (
-          <span className="flex items-center justify-center gap-2">
-            <span className="animate-spin">⚙️</span> Generating...
-          </span>
-        ) : (
-          '✨ Generate Image'
-        )}
+        {loading ? '⚙️ Generating...' : '✨ Generate Image'}
       </button>
 
       {/* Success */}
       {success && (
-        <div className="p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-300 text-sm font-semibold animate-fade-in">
+        <div style={{ background: 'rgba(34, 197, 94, 0.2)', border: '1px solid rgba(34, 197, 94, 0.5)', borderRadius: '8px', padding: '16px', color: '#86efac', fontSize: '14px', fontWeight: '600' }}>
           ✅ Image created successfully!
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 text-sm font-semibold animate-fade-in">
+        <div style={{ background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.5)', borderRadius: '8px', padding: '16px', color: '#fca5a5', fontSize: '14px', fontWeight: '600' }}>
           ❌ {error}
         </div>
       )}
 
       {/* Image */}
       {image && (
-        <div className="space-y-4 animate-fade-in">
-          <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-            <img
-              src={image}
-              alt="Generated"
-              className="w-full h-auto hover:scale-105 transition duration-300"
-              loading="lazy"
-            />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <img src={image} alt="Generated" style={{ width: '100%', height: 'auto', display: 'block' }} />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <a
               href={image}
               download
-              className="py-3 px-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-lg font-bold text-center transition"
+              style={{ background: 'linear-gradient(to right, #22c55e, #10b981)', borderRadius: '8px', padding: '12px', fontWeight: 'bold', textAlign: 'center', transition: 'opacity 0.3s' }}
+              className="hover:opacity-90"
             >
               ⬇️ Download
             </a>
@@ -158,18 +139,17 @@ export function ImageGenerator() {
               href="https://app.postiz.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-bold text-center transition"
+              style={{ background: 'linear-gradient(to right, #a855f7, #ec4899)', borderRadius: '8px', padding: '12px', fontWeight: 'bold', textAlign: 'center', transition: 'opacity 0.3s' }}
+              className="hover:opacity-90"
             >
               📤 Post
             </a>
           </div>
 
           <button
-            onClick={() => {
-              setCaption('')
-              setImage('')
-            }}
-            className="w-full py-3 px-4 bg-white/5 border border-white/10 hover:bg-white/8 text-white rounded-lg font-bold transition"
+            onClick={() => { setCaption(''); setImage(''); }}
+            style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '8px', padding: '12px', fontWeight: 'bold', transition: 'all 0.3s' }}
+            className="w-full text-white hover:bg-white/10"
           >
             ➕ New Image
           </button>
@@ -178,10 +158,10 @@ export function ImageGenerator() {
 
       {/* Empty */}
       {!image && !loading && (
-        <div className="text-center py-20">
-          <p className="text-6xl mb-4">🎨</p>
-          <p className="text-xl font-semibold text-gray-300">Your image will appear here</p>
-          <p className="text-gray-500 mt-2">Describe what you want, and AI will create it</p>
+        <div style={{ textAlign: 'center', paddingTop: '80px', paddingBottom: '80px', color: '#6b7280' }}>
+          <p style={{ fontSize: '48px', marginBottom: '16px' }}>🎨</p>
+          <p style={{ fontSize: '18px', fontWeight: '600', color: '#d1d5db' }}>Your image will appear here</p>
+          <p style={{ marginTop: '8px', fontSize: '14px' }}>Describe what you want, and AI will create it</p>
         </div>
       )}
     </div>
