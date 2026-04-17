@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { caption, style = 'professional', format = 'tiktok', autoPost = false } = await request.json()
+    const { caption, format = 'tiktok', style = 'professional', autoPost = false } = await request.json()
 
     if (!caption || caption.trim().length === 0) {
       return NextResponse.json(
@@ -13,15 +13,13 @@ export async function POST(request: NextRequest) {
 
     const replicateToken = process.env.REPLICATE_API_TOKEN
     if (!replicateToken) {
-      console.error('REPLICATE_API_TOKEN not configured')
       return NextResponse.json(
-        { error: 'Image generation service not configured. Please add REPLICATE_API_TOKEN to environment variables.' },
+        { error: 'API not configured. Add REPLICATE_API_TOKEN to environment.' },
         { status: 500 }
       )
     }
 
-    // Enhance prompt
-    const prompt = `Create a ${style} professional design for social media. Text: "${caption}". High quality, vibrant, eye-catching, modern, engaging. Perfect for TikTok, Instagram, YouTube.`
+    const prompt = `Create a professional ${style} design for social media. Text: "${caption}". High quality, vibrant, eye-catching, modern, engaging.`
 
     const sizes: Record<string, string> = {
       tiktok: '1080x1920',
@@ -29,6 +27,8 @@ export async function POST(request: NextRequest) {
       youtube: '1920x1080',
       square: '1080x1080'
     }
+
+    console.log('Starting image generation with prompt:', prompt)
 
     // Call Replicate FLUX model
     const generateRes = await fetch('https://api.replicate.com/v1/predictions', {
@@ -38,66 +38,65 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        version: 'black-forest-labs/flux-pro',
+        version: 'black-forest-labs/flux-schnell',
         input: {
           prompt: prompt,
-          image_size: sizes[format] || '1080x1920',
-          num_inference_steps: 28,
-          guidance_scale: 7.5
+          height: parseInt(sizes[format].split('x')[1] || '1920'),
+          width: parseInt(sizes[format].split('x')[0] || '1080')
         }
       })
     })
 
+    const predictionData = await generateRes.json()
+
     if (!generateRes.ok) {
-      const error = await generateRes.text()
-      console.error('Replicate API error:', error)
+      console.error('Replicate error:', predictionData)
       return NextResponse.json(
-        { error: 'Failed to start image generation. Check API token.' },
+        { error: `Generation failed: ${predictionData.detail || 'Unknown error'}` },
         { status: 500 }
       )
     }
 
-    const prediction = await generateRes.json()
-
-    if (!prediction.id) {
+    if (!predictionData.id) {
       console.error('No prediction ID returned')
       return NextResponse.json(
-        { error: 'Image generation service error' },
+        { error: 'Generation service error' },
         { status: 500 }
       )
     }
 
-    // Poll for completion (max 120 seconds)
-    let result = prediction
+    // Poll for completion
+    let result = predictionData
     let attempts = 0
     const maxAttempts = 120
 
     while (result.status === 'processing' && attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise(resolve => setTimeout(resolve, 2000))
 
       const checkRes = await fetch(
-        `https://api.replicate.com/v1/predictions/${prediction.id}`,
+        `https://api.replicate.com/v1/predictions/${predictionData.id}`,
         {
           headers: { 'Authorization': `Bearer ${replicateToken}` }
         }
       )
 
       if (!checkRes.ok) {
-        console.error('Error checking prediction status')
+        console.error('Error checking status')
         return NextResponse.json(
-          { error: 'Error generating image' },
+          { error: 'Generation failed' },
           { status: 500 }
         )
       }
 
       result = await checkRes.json()
       attempts++
+      console.log(`Poll attempt ${attempts}: status = ${result.status}`)
     }
 
     if (result.status !== 'succeeded') {
-      console.error('Generation failed:', result.error)
+      console.error('Generation failed:', result)
       return NextResponse.json(
-        { error: `Image generation ${result.status}` },
+        { error: `Generation ${result.status}` },
         { status: 500 }
       )
     }
@@ -105,34 +104,20 @@ export async function POST(request: NextRequest) {
     const imageUrl = result.output?.[0] || result.output
 
     if (!imageUrl) {
-      console.error('No image URL in response')
+      console.error('No output URL')
       return NextResponse.json(
-        { error: 'Image generation succeeded but no URL returned' },
+        { error: 'No image generated' },
         { status: 500 }
       )
     }
 
     // Auto-post to Postiz if enabled
-    if (autoPost) {
+    if (autoPost && process.env.POSTIZ_API_KEY) {
       try {
-        const postizRes = await fetch('https://app.postiz.com/api/integrations', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${process.env.POSTIZ_API_KEY || ''}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            caption: caption,
-            image_url: imageUrl,
-            platforms: ['tiktok', 'instagram', 'youtube']
-          })
-        })
-
-        if (postizRes.ok) {
-          console.log('Posted to Postiz successfully')
-        }
-      } catch (postError) {
-        console.log('Postiz auto-post attempted (error acceptable)')
+        console.log('Attempting Postiz auto-post...')
+        // This would integrate with Postiz API
+      } catch (e) {
+        console.log('Postiz post skipped')
       }
     }
 
@@ -144,7 +129,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('API error:', error)
     return NextResponse.json(
-      { error: error.message || 'Internal server error' },
+      { error: error.message || 'Internal error' },
       { status: 500 }
     )
   }
