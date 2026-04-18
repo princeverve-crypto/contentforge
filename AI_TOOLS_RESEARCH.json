@@ -1,0 +1,735 @@
+{
+  "metadata": {
+    "research_date": "2026-04-18",
+    "research_scope": "Comprehensive analysis of open-source and self-hosted AI tools for image generation, video generation, image editing, multi-agent frameworks, and self-hosted APIs",
+    "note": "All complexity ratings are on a 1-10 scale (1=trivial, 10=extremely complex). Setup times are estimated based on prior experience with similar tools."
+  },
+  "image_generation": {
+    "stability_ai_stable_diffusion": {
+      "name": "Stability AI - Stable Diffusion 3.5",
+      "url": "https://github.com/Stability-AI/generative-models",
+      "description": "Open-source image generation models with three variants: Large, Large Turbo (4-step fast), and Medium (2.6B params for consumer hardware)",
+      "complexity": 5,
+      "setup_time_hours": 1.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.8+",
+        "PyTorch",
+        "Diffusers",
+        "CUDA/cuDNN (optional GPU acceleration)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "High (core Stability AI models)",
+      "key_features": [
+        "Commercial-ready quality",
+        "Multiple size options for different hardware",
+        "Fast inference with Turbo variant",
+        "Fine-tuning friendly"
+      ],
+      "hardware_requirements": "4GB+ VRAM (Medium), 8GB+ (Large), GPU recommended"
+    },
+    "hugging_face_diffusers": {
+      "name": "Hugging Face Diffusers",
+      "url": "https://github.com/huggingface/diffusers",
+      "description": "Unified library for state-of-the-art diffusion models supporting text-to-image, image-to-image, inpainting, and outpainting",
+      "complexity": 3,
+      "setup_time_hours": 1,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.7+",
+        "PyTorch or TensorFlow",
+        "Transformers",
+        "NumPy",
+        "Pillow",
+        "Accelerate (for GPU optimization)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "37K+",
+      "key_features": [
+        "Easy-to-use pipeline API",
+        "Hundreds of community fine-tuned models",
+        "Multiple generation types supported",
+        "Memory optimization with float16",
+        "Excellent documentation"
+      ],
+      "hardware_requirements": "4GB+ VRAM, GPU recommended for speed",
+      "installation_command": "pip install diffusers transformers torch"
+    },
+    "automatic1111_webui": {
+      "name": "AUTOMATIC1111 Stable Diffusion WebUI",
+      "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui",
+      "description": "Feature-rich web interface for Stable Diffusion with extensive customization, extensions, and community support",
+      "complexity": 6,
+      "setup_time_hours": 0.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.10.6 (NOT 3.11+)",
+        "Git",
+        "NVIDIA GPU (CUDA required)",
+        "7GB+ disk space for models"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "140K+",
+      "key_features": [
+        "Intuitive GUI",
+        "Extensive extension system",
+        "Multiple sampling algorithms",
+        "LoRA support",
+        "Inpainting and outpainting",
+        "Script/automation support"
+      ],
+      "hardware_requirements": "NVIDIA GPU with CUDA support, 8GB+ VRAM recommended",
+      "setup_notes": "Installation is quick but has strict Python version requirements. Subsequent launches start instantly."
+    },
+    "comfyui": {
+      "name": "ComfyUI",
+      "url": "https://github.com/comfyanonymous/ComfyUI",
+      "description": "Node-based, modular approach to image generation workflows with full control and flexibility",
+      "complexity": 7,
+      "setup_time_hours": 2,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.8+",
+        "PyTorch",
+        "NVIDIA/AMD GPU or CPU",
+        "ComfyUI Manager (optional, simplifies custom node installation)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "High (very popular in community)",
+      "key_features": [
+        "Complete node-based workflow control",
+        "500+ custom nodes available",
+        "Reproducible workflows (JSON export)",
+        "Memory efficient",
+        "Real-time preview",
+        "Batch processing"
+      ],
+      "hardware_requirements": "GPU recommended (NVIDIA/AMD), 4GB+ VRAM minimum",
+      "learning_curve": "Steep but rewarding for advanced users who want precise control"
+    },
+    "localai": {
+      "name": "LocalAI",
+      "url": "https://github.com/mudler/LocalAI",
+      "description": "Drop-in OpenAI API replacement supporting image generation alongside LLMs and audio",
+      "complexity": 4,
+      "setup_time_hours": 0.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Docker (recommended)",
+        "Or: Python 3.8+, GCC, make"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "10K+",
+      "key_features": [
+        "OpenAI API compatible",
+        "Image generation, LLM, audio in single API",
+        "No GPU required",
+        "Multi-user with API keys",
+        "Web UI included",
+        "Model management built-in"
+      ],
+      "hardware_requirements": "CPU or GPU, 4GB+ RAM minimum",
+      "quick_start": "docker run -p 8080:8080 --name local-ai -ti localai/localai:latest-cpu"
+    }
+  },
+  "video_generation": {
+    "animatediff": {
+      "name": "AnimateDiff",
+      "url": "https://github.com/guoyww/AnimateDiff",
+      "description": "Plug-and-play motion module that turns Stable Diffusion into video generators without retraining",
+      "complexity": 6,
+      "setup_time_hours": 2,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Stable Diffusion (AUTOMATIC1111 or ComfyUI)",
+        "Python 3.8+",
+        "PyTorch",
+        "NVIDIA GPU (8GB+ VRAM recommended)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "10K+",
+      "key_features": [
+        "Image-to-video animation",
+        "Works with existing SD checkpoints",
+        "Multiple motion modules available",
+        "ControlNet integration possible",
+        "Frame interpolation support"
+      ],
+      "hardware_requirements": "Strong NVIDIA GPU, 8GB+ VRAM minimum, 24GB+ recommended",
+      "integration_options": [
+        "AUTOMATIC1111 WebUI extension",
+        "ComfyUI custom node",
+        "Standalone Python"
+      ]
+    },
+    "stable_video_diffusion": {
+      "name": "Stable Video Diffusion",
+      "url": "https://github.com/Stability-AI/generative-models",
+      "description": "Open-source video generation model from Stability AI with both image-to-video and text-to-video capabilities",
+      "complexity": 6,
+      "setup_time_hours": 1.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.8+",
+        "PyTorch",
+        "Diffusers",
+        "NVIDIA GPU recommended"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "High (Stability AI)",
+      "key_features": [
+        "Image-to-video with 25 fps output",
+        "Open API available",
+        "Good motion quality",
+        "Reasonable inference time"
+      ],
+      "hardware_requirements": "8GB+ VRAM GPU, 16GB+ recommended"
+    },
+    "mochi_1": {
+      "name": "Mochi 1",
+      "url": "https://github.com/genmoai/mochi",
+      "description": "Open-source 10B parameter video generation model from Genmo AI with smooth, realistic 30 fps output",
+      "complexity": 7,
+      "setup_time_hours": 2,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.9+",
+        "PyTorch",
+        "CUDA 11.8+",
+        "24GB+ VRAM GPU"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "Growing",
+      "key_features": [
+        "10B parameter architecture",
+        "30 fps smooth output",
+        "Text-to-video capability",
+        "Higher quality than many alternatives",
+        "Mixture-of-Experts efficiency"
+      ],
+      "hardware_requirements": "Very demanding - 24GB+ VRAM, high-end NVIDIA GPU required"
+    },
+    "ebsynth": {
+      "name": "EbSynth / ReEzSynth (Open Source)",
+      "url": "https://github.com/FuouM/ReEzSynth",
+      "description": "Video style transfer and frame-based synthesis without requiring generative models. Transforms video based on keyframe edits.",
+      "complexity": 5,
+      "setup_time_hours": 1.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source (EbSynth app is closed-source but free)",
+      "dependencies": [
+        "Python 3.8+ (for ReEzSynth)",
+        "PyTorch",
+        "CUDA (optional but recommended)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "2K+ (ReEzSynth)",
+      "key_features": [
+        "Paint one frame to transform entire video",
+        "No training required",
+        "Texture synthesis based approach",
+        "Good for stylization and colorization",
+        "Works with AUTOMATIC1111 as extension"
+      ],
+      "hardware_requirements": "4GB+ VRAM GPU, CPU option available but slower",
+      "use_cases": "Video stylization, animation conversion, colorization, digital makeup"
+    },
+    "openai_sora": {
+      "name": "OpenAI Sora",
+      "url": "https://openai.com/sora",
+      "description": "CLOSED SOURCE - Cutting-edge text-to-video model. Mentioned for comparison only.",
+      "complexity": null,
+      "setup_time_hours": null,
+      "free_tier": false,
+      "pricing": "Paid API (beta access only)",
+      "dependencies": [],
+      "npm_available": false,
+      "docker_available": false,
+      "note": "Closed source, only available via paid API"
+    }
+  },
+  "image_editing_processing": {
+    "opencv": {
+      "name": "OpenCV (cv2)",
+      "url": "https://github.com/opencv/opencv",
+      "description": "Industrial-strength computer vision library with extensive image processing capabilities",
+      "complexity": 4,
+      "setup_time_hours": 0.25,
+      "free_tier": true,
+      "pricing": "Free/Open Source (BSD license)",
+      "dependencies": [
+        "Python 3.6+",
+        "NumPy",
+        "Optional: CUDA for GPU acceleration"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "33K+",
+      "key_features": [
+        "Image filtering and transformation",
+        "Edge detection",
+        "Contour detection",
+        "Feature matching",
+        "Video processing",
+        "Machine learning integration"
+      ],
+      "hardware_requirements": "None (CPU works fine, GPU optional)",
+      "installation_command": "pip install opencv-python"
+    },
+    "pillow": {
+      "name": "Pillow (PIL Fork)",
+      "url": "https://github.com/python-pillow/Pillow",
+      "description": "Python Imaging Library fork - simple, user-friendly image processing for common tasks",
+      "complexity": 2,
+      "setup_time_hours": 0.15,
+      "free_tier": true,
+      "pricing": "Free/Open Source (HPND license)",
+      "dependencies": [
+        "Python 3.7+",
+        "No external dependencies (prebuilt binaries available)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "12K+",
+      "key_features": [
+        "Image load/save (60+ formats)",
+        "Resize, crop, rotate",
+        "Filters and effects",
+        "Color conversion",
+        "Image composition",
+        "Very beginner-friendly"
+      ],
+      "hardware_requirements": "None (pure Python)",
+      "installation_command": "pip install pillow",
+      "best_for": "Quick image processing, file conversion, basic manipulation"
+    },
+    "rembg": {
+      "name": "RemBG",
+      "url": "https://github.com/danielgatis/rembg",
+      "description": "AI-powered background removal using ONNX models without heavy dependencies",
+      "complexity": 2,
+      "setup_time_hours": 0.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.7+",
+        "ONNX Runtime (CPU or GPU)",
+        "Optional: onnxruntime-gpu, CUDA, cuDNN for GPU support"
+      ],
+      "npm_available": true,
+      "docker_available": true,
+      "github_stars": "6K+",
+      "key_features": [
+        "Automatic background detection",
+        "Alpha matting for refinement",
+        "Custom background colors",
+        "Multiple model options",
+        "CLI and Python API",
+        "GIMP plugin available",
+        "DaVinci Resolve plugin (Rembg-Fuse)"
+      ],
+      "hardware_requirements": "2GB+ VRAM for GPU, CPU option available",
+      "installation_command": "pip install rembg",
+      "npm_command": "npm install rembg"
+    },
+    "gfpgan": {
+      "name": "GFPGAN",
+      "url": "https://github.com/TencentARC/GFPGAN",
+      "description": "Generative Facial Prior for blind face restoration and enhancement",
+      "complexity": 4,
+      "setup_time_hours": 1,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.7+",
+        "PyTorch",
+        "CUDA (recommended)",
+        "BasicSR",
+        "FaceXLib"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "6K+",
+      "key_features": [
+        "Face restoration from low-quality inputs",
+        "Blind face enhancement (no need for paired training data)",
+        "Multiple model versions (v1, v1.2, v1.3)",
+        "Compatible with Real-ESRGAN for background enhancement",
+        "ComfyUI node available"
+      ],
+      "hardware_requirements": "4GB+ VRAM GPU recommended",
+      "model_download": "v1.3 model: wget https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.3.pth",
+      "use_cases": "Old photo restoration, face enhancement, quality improvement"
+    }
+  },
+  "multi_agent_frameworks": {
+    "langchain": {
+      "name": "LangChain",
+      "url": "https://github.com/langchain-ai/langchain",
+      "description": "Agent engineering platform for building multi-agent systems with LangGraph specialization",
+      "complexity": 5,
+      "setup_time_hours": 1,
+      "free_tier": true,
+      "pricing": "Free/Open Source (with optional LangSmith observability)",
+      "dependencies": [
+        "Python 3.8+",
+        "LLM API keys (OpenAI, Anthropic, etc.)"
+      ],
+      "npm_available": true,
+      "docker_available": true,
+      "github_stars": "133K+",
+      "key_features": [
+        "Flexible agent orchestration",
+        "LangGraph for state management",
+        "Multiple tool integration",
+        "Memory management",
+        "Streaming support",
+        "LangSmith observability (optional paid)"
+      ],
+      "learning_curve": "Medium - good documentation",
+      "growth": "220% increase in GitHub stars from Q1 2024-Q1 2025"
+    },
+    "crewai": {
+      "name": "CrewAI",
+      "url": "https://github.com/crewAIInc/crewAI",
+      "description": "Lean, independent multi-agent orchestration framework optimized for role-based autonomous agents",
+      "complexity": 4,
+      "setup_time_hours": 0.75,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.10 - 3.12 (NOT 3.13)",
+        "uv package manager (recommended)",
+        "LLM API keys"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "20K+",
+      "key_features": [
+        "Agent role definition (role, goal, backstory)",
+        "Task orchestration",
+        "Crew collaboration",
+        "Flows for deterministic workflows",
+        "Manager agents for planning",
+        "Fast package installation with uv",
+        "Independent from LangChain"
+      ],
+      "learning_curve": "Low - intuitive role-based design",
+      "differentiators": "Dual approach: Crews for adaptive collaboration, Flows for deterministic control"
+    },
+    "autogen": {
+      "name": "AutoGen (Microsoft) - Legacy",
+      "url": "https://github.com/microsoft/autogen",
+      "description": "Multi-agent conversation framework. NOW IN MAINTENANCE MODE - Microsoft recommends new Agent Framework instead.",
+      "complexity": 5,
+      "setup_time_hours": 1,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.8+",
+        "LLM API keys"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "34K+",
+      "key_features": [
+        "ConversableAgent for communication",
+        "Tool integration",
+        "Group chat management",
+        "Code execution support",
+        "Multi-model support"
+      ],
+      "warning": "MAINTENANCE MODE - Use Microsoft Agent Framework for new projects",
+      "status": "Legacy framework being deprecated"
+    },
+    "pydantic_ai": {
+      "name": "Pydantic AI",
+      "url": "https://github.com/pydantic/pydantic-ai",
+      "description": "Type-safe agent framework leveraging Pydantic's validation with structured outputs",
+      "complexity": 3,
+      "setup_time_hours": 0.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.10+",
+        "Pydantic v2",
+        "LLM API keys"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "5K+",
+      "key_features": [
+        "Type-safe tool definitions",
+        "Structured output validation",
+        "Dependency injection",
+        "Multi-agent patterns",
+        "Thinking and WebSearch capabilities",
+        "Sync and async execution",
+        "Streaming support"
+      ],
+      "learning_curve": "Low - Pythonic and type-safe",
+      "best_for": "Type-safe applications where data validation is critical"
+    },
+    "llamaindex": {
+      "name": "LlamaIndex",
+      "url": "https://github.com/run-llama/llama_index",
+      "description": "Framework for building context-aware agent systems with focus on data indexing and retrieval",
+      "complexity": 6,
+      "setup_time_hours": 1.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.8+",
+        "Vector database (optional)",
+        "LLM API keys"
+      ],
+      "npm_available": true,
+      "docker_available": true,
+      "github_stars": "35K+",
+      "key_features": [
+        "AgentWorkflow for quick prototyping",
+        "Orchestrator agent pattern",
+        "Custom planner support",
+        "Vector database integration",
+        "Multi-document agents",
+        "RAG (Retrieval-Augmented Generation)",
+        "llama-agents for production deployment"
+      ],
+      "learning_curve": "Medium - powerful but requires understanding of RAG patterns",
+      "best_for": "Knowledge-intensive applications with retrieval requirements"
+    }
+  },
+  "self_hosted_api": {
+    "ollama": {
+      "name": "Ollama",
+      "url": "https://github.com/ollama/ollama",
+      "description": "Docker-like simplicity for running open-source LLMs locally with OpenAI API compatibility",
+      "complexity": 1,
+      "setup_time_hours": 0.25,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Ollama binary (all platforms supported)",
+        "Or: Docker"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "100K+",
+      "key_features": [
+        "One-command model pulling and running",
+        "OpenAI API compatible at localhost:11434",
+        "Model management built-in",
+        "GPU acceleration automatic",
+        "Offline capability",
+        "Multiple model support (Llama, Mistral, Gemma, etc.)",
+        "Memory-efficient quantization"
+      ],
+      "hardware_requirements": "8GB RAM minimum (Llama 3.2 3B), 40GB+ for 70B models, GPU optional",
+      "quick_start": "ollama pull llama2 && ollama run llama2",
+      "api_endpoint": "http://localhost:11434/v1/chat/completions",
+      "use_cases": "Local development, privacy-focused applications, offline inference"
+    },
+    "vllm": {
+      "name": "vLLM",
+      "url": "https://github.com/vllm-project/vllm",
+      "description": "High-throughput, memory-efficient inference and serving engine for LLMs with tensor parallelism",
+      "complexity": 6,
+      "setup_time_hours": 1.5,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Python 3.10+ (3.12+ recommended)",
+        "PyTorch",
+        "NVIDIA/AMD GPU or CPU",
+        "uv package manager (recommended)"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "25K+",
+      "key_features": [
+        "High throughput (10-40x faster than standard serving)",
+        "Paged attention optimization",
+        "Tensor parallelism and pipeline parallelism",
+        "200+ model architectures supported",
+        "Dynamic batching",
+        "Token streaming",
+        "GPU and CPU support",
+        "Custom CUDA kernels"
+      ],
+      "hardware_requirements": "GPU strongly recommended (NVIDIA/AMD), 8GB+ VRAM minimum",
+      "supported_accelerators": "NVIDIA, AMD (ROCm), Intel, Apple Silicon, Google TPU, IBM Spyre, Huawei Ascend",
+      "best_for": "Production inference servers needing high throughput and optimization"
+    },
+    "text_generation_inference": {
+      "name": "Text Generation Inference (TGI)",
+      "url": "https://github.com/huggingface/text-generation-inference",
+      "description": "Hugging Face's production-ready inference server with OpenAI API compatibility",
+      "complexity": 5,
+      "setup_time_hours": 1,
+      "free_tier": true,
+      "pricing": "Free/Open Source",
+      "dependencies": [
+        "Rust (for compilation)",
+        "Python 3.9+",
+        "CUDA/GPU (recommended)",
+        "Protoc compiler"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "9K+",
+      "key_features": [
+        "Optimized text generation",
+        "Token streaming",
+        "OpenAI Chat Completions API",
+        "Distributed inference support",
+        "Flash Attention optimization",
+        "Watermarking support",
+        "Safety features (safety tokens)"
+      ],
+      "hardware_requirements": "GPU recommended (NVIDIA, AMD), 8GB+ VRAM",
+      "quick_start_docker": "docker run --gpus all -p 8080:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:latest --model-id meta-llama/Llama-2-7b-hf",
+      "supported_models": "Llama, Falcon, StarCoder, BLOOM, GPT-NeoX, T5",
+      "api_compatibility": "OpenAI compatible with InferenceClient"
+    },
+    "ray_serve": {
+      "name": "Ray Serve",
+      "url": "https://docs.ray.io/en/latest/serve/index.html",
+      "description": "Scalable model serving framework for distributed inference with multi-model and multi-GPU support",
+      "complexity": 7,
+      "setup_time_hours": 2,
+      "free_tier": true,
+      "pricing": "Free/Open Source (Ray is hosted via Anyscale for enterprise)",
+      "dependencies": [
+        "Python 3.8+",
+        "Ray core",
+        "PyTorch/TensorFlow or other ML framework"
+      ],
+      "npm_available": false,
+      "docker_available": true,
+      "github_stars": "32K+ (Ray core)",
+      "key_features": [
+        "Framework-agnostic (PyTorch, TensorFlow, Sklearn, arbitrary Python)",
+        "Multi-model serving",
+        "Dynamic batching",
+        "Fractional GPU allocation",
+        "Multi-node scaling",
+        "Response streaming",
+        "Auto-scaling",
+        "Model composition support"
+      ],
+      "hardware_requirements": "CPU capable, GPU optional for acceleration, works on single or multi-node clusters",
+      "learning_curve": "Steep - requires understanding of Ray actors and distributed computing",
+      "best_for": "Complex production systems requiring multi-model orchestration, auto-scaling, and advanced scheduling"
+    }
+  },
+  "comparative_analysis": {
+    "image_generation_rankings": {
+      "ease_of_use": [
+        "1. LocalAI (4/10)",
+        "2. Hugging Face Diffusers (3/10)",
+        "3. AUTOMATIC1111 (6/10)",
+        "4. Stable Diffusion (5/10)",
+        "5. ComfyUI (7/10)"
+      ],
+      "quality_vs_speed": {
+        "highest_quality": "Stable Diffusion 3.5 Large",
+        "fastest": "Stable Diffusion 3.5 Turbo (4 steps)",
+        "most_flexible": "Stable Diffusion 3.5 Medium (runs on consumer hardware)"
+      },
+      "recommendation": "Start with Hugging Face Diffusers for learning, AUTOMATIC1111 for user-friendly production, ComfyUI for advanced control"
+    },
+    "video_generation_status": {
+      "state": "Nascent but rapidly improving (2026)",
+      "challenges": [
+        "High computational requirements",
+        "Longer generation times than images",
+        "Quality still behind closed-source (Sora, Kling)"
+      ],
+      "best_option": "AnimateDiff for image-to-video, Mochi 1 for quality",
+      "not_recommended": "Closed-source Haiper AI (shutdown in Feb 2025), use alternatives instead"
+    },
+    "image_editing_workflow": {
+      "simple_tasks": "Pillow - file conversion, resize, basic filters",
+      "professional_tasks": "OpenCV - advanced processing, computer vision",
+      "ai_enhancement": "GFPGAN (faces) + RemBG (backgrounds)",
+      "integration": "Use all three together in pipelines"
+    },
+    "multi_agent_selection": {
+      "new_projects": "CrewAI - simplest, most intuitive",
+      "production_rag": "LlamaIndex - built for retrieval-augmented generation",
+      "type_safe": "Pydantic AI - best validation and type safety",
+      "general_purpose": "LangChain - most flexible, most ecosystem",
+      "avoid": "AutoGen - in maintenance mode, use Microsoft Agent Framework instead"
+    },
+    "self_hosted_api": {
+      "easiest_setup": "Ollama - one command, amazing DX",
+      "highest_performance": "vLLM - optimized inference",
+      "production_ready": "Text Generation Inference (TGI) - proven at scale",
+      "complex_orchestration": "Ray Serve - multi-model, auto-scaling, distributed"
+    }
+  },
+  "cost_analysis": {
+    "free_open_source": [
+      "All image generation models (Stable Diffusion, Diffusers, AUTOMATIC1111, ComfyUI)",
+      "All video generation models (AnimateDiff, Stable Video Diffusion, Mochi 1, EbSynth)",
+      "Image editing (OpenCV, Pillow, RemBG, GFPGAN)",
+      "All multi-agent frameworks except LangSmith observability",
+      "All self-hosted APIs (Ollama, vLLM, TGI, Ray Serve)"
+    ],
+    "optional_paid": [
+      "LangSmith (LangChain observability) - $10-300+/month",
+      "Hugging Face Inference API (optional hosted option)",
+      "Ray on Anyscale (managed hosting)"
+    ],
+    "hardware_costs": {
+      "minimum_gpu": "NVIDIA RTX 3060 (12GB) - ~$400",
+      "recommended_gpu": "NVIDIA RTX 4080 (24GB) - ~$1200",
+      "high_end": "NVIDIA A100 (40GB) - ~$10000",
+      "budget_cpu_option": "CPU-only inference possible but much slower"
+    }
+  },
+  "recommendations_for_contentforge": {
+    "image_generation": {
+      "primary": "AUTOMATIC1111 WebUI - user-friendly, feature-rich",
+      "alternative": "Hugging Face Diffusers - lighter weight, more control",
+      "integration": "Use with LocalAI if you need unified API for multiple modalities"
+    },
+    "video_generation": {
+      "status": "Research phase - not production ready yet",
+      "recommended_approach": "AnimateDiff for image-to-video pipeline (can create videos from generated images)",
+      "alternative": "EbSynth for video stylization/transformation workflows"
+    },
+    "image_editing": {
+      "background_removal": "RemBG - simple, effective, npm available",
+      "face_enhancement": "GFPGAN - specialized and powerful",
+      "general_processing": "Pillow for common tasks, OpenCV for advanced"
+    },
+    "orchestration": {
+      "primary": "CrewAI - most intuitive for multi-agent workflows",
+      "secondary": "Pydantic AI - if type safety is critical",
+      "avoid": "AutoGen - deprecated"
+    },
+    "api_serving": {
+      "development": "Ollama - simplest to set up and use",
+      "production": "Text Generation Inference - battle-tested",
+      "complex_needs": "Ray Serve for multi-model complex orchestration"
+    }
+  }
+}
