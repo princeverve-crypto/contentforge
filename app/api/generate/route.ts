@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { generateSVGImage } from '@/app/lib/image-generator-utils'
 
 export async function POST(request: NextRequest) {
   let caption = ''
@@ -28,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     if (!openrouterKey) {
       // Fallback to SVG generation when API not configured
-      const imageUrl = generateSVGImage(caption, format, style)
+      const imageUrl = `/api/images/generate?caption=${encodeURIComponent(caption)}&format=${format}&style=${style}`
       return NextResponse.json({
         imageUrl,
         success: true,
@@ -58,7 +57,7 @@ export async function POST(request: NextRequest) {
       console.error('OpenRouter error:', error)
 
       // Fallback to SVG generation
-      const imageUrl = generateSVGImage(caption, format, style)
+      const imageUrl = `/api/images/generate?caption=${encodeURIComponent(caption)}&format=${format}&style=${style}`
       return NextResponse.json({
         imageUrl,
         success: true,
@@ -79,7 +78,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Final fallback to SVG
-    const imageUrl = generateSVGImage(caption, format, style)
+    const imageUrl = `/api/images/generate?caption=${encodeURIComponent(caption)}&format=${format}&style=${style}`
     return NextResponse.json({
       imageUrl,
       success: true,
@@ -87,7 +86,7 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: any) {
     console.error('API error:', error)
-    const imageUrl = generateSVGImage(caption, format, style)
+    const imageUrl = `/api/images/generate?caption=${encodeURIComponent(caption)}&format=${format}&style=${style}`
 
     return NextResponse.json({
       imageUrl,
