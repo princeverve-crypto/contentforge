@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { generateSVGImage } from '@/app/lib/image-generator-utils'
 
 export async function POST(request: NextRequest) {
+  let caption = ''
+  let format = 'tiktok'
+  let style = 'professional'
+
   try {
-    const { caption, format = 'tiktok', style = 'professional' } = await request.json()
+    const body = await request.json()
+    caption = body.caption
+    format = body.format || 'tiktok'
+    style = body.style || 'professional'
 
     if (!caption || caption.trim().length === 0) {
       return NextResponse.json(
@@ -19,10 +27,13 @@ export async function POST(request: NextRequest) {
     const openrouterKey = process.env.OPENROUTER_KEY
 
     if (!openrouterKey) {
-      return NextResponse.json(
-        { error: 'Image generation not configured. Add OPENROUTER_KEY.' },
-        { status: 503 }
-      )
+      // Fallback to SVG generation when API not configured
+      const imageUrl = generateSVGImage(caption, format, style)
+      return NextResponse.json({
+        imageUrl,
+        success: true,
+        message: 'Generated with SVG (add OPENROUTER_KEY for AI generation)'
+      })
     }
 
     // Call OpenRouter API for image generation
@@ -46,20 +57,12 @@ export async function POST(request: NextRequest) {
       const error = await generateRes.json()
       console.error('OpenRouter error:', error)
 
-      // Fallback to gradient placeholder with neon colors
-      const sizes: Record<string, { width: number; height: number }> = {
-        tiktok: { width: 1080, height: 1920 },
-        instagram: { width: 1080, height: 1920 },
-        youtube: { width: 1920, height: 1080 },
-        square: { width: 1080, height: 1080 }
-      }
-      const size = sizes[format] || sizes.tiktok
-      const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23b537f2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3C/svg%3E`
-
+      // Fallback to SVG generation
+      const imageUrl = generateSVGImage(caption, format, style)
       return NextResponse.json({
-        imageUrl: placeholderUrl,
+        imageUrl,
         success: true,
-        message: 'Generated with gradient fallback'
+        message: 'Generated with SVG fallback'
       })
     }
 
@@ -75,28 +78,19 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Fallback
-    const sizes: Record<string, { width: number; height: number }> = {
-      tiktok: { width: 1080, height: 1920 },
-      instagram: { width: 1080, height: 1920 },
-      youtube: { width: 1920, height: 1080 },
-      square: { width: 1080, height: 1080 }
-    }
-    const size = sizes[format] || sizes.tiktok
-    const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23b537f2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3C/svg%3E`
-
+    // Final fallback to SVG
+    const imageUrl = generateSVGImage(caption, format, style)
     return NextResponse.json({
-      imageUrl: placeholderUrl,
+      imageUrl,
       success: true,
       message: 'Generated'
     })
   } catch (error: any) {
     console.error('API error:', error)
-
-    const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23b537f2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='1080' height='1920'/%3E%3C/svg%3E`
+    const imageUrl = generateSVGImage(caption, format, style)
 
     return NextResponse.json({
-      imageUrl: placeholderUrl,
+      imageUrl,
       success: true,
       message: 'Generated'
     })
