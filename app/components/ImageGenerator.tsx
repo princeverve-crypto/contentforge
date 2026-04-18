@@ -10,6 +10,9 @@ export function ImageGenerator() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [autoPost, setAutoPost] = useState(false)
+  const [showScheduler, setShowScheduler] = useState(false)
+  const [scheduledTime, setScheduledTime] = useState('')
+  const [scheduling, setScheduling] = useState(false)
 
   async function generateImage() {
     if (!caption.trim()) {
@@ -70,6 +73,44 @@ export function ImageGenerator() {
       }
     } catch (err: any) {
       setError('Failed to post to social media')
+    }
+  }
+
+  async function schedulePost() {
+    if (!image || !scheduledTime) {
+      setError('Please select a date and time')
+      return
+    }
+
+    setScheduling(true)
+    setError('')
+
+    try {
+      const res = await fetch('/api/schedule-post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: 'user_demo',
+          imageUrl: image,
+          caption,
+          platforms: ['tiktok', 'instagram', 'youtube'],
+          format,
+          scheduledAt: scheduledTime
+        })
+      })
+
+      const data = await res.json()
+      if (res.ok) {
+        setSuccess(`✅ Post scheduled for ${new Date(scheduledTime).toLocaleString()}`)
+        setShowScheduler(false)
+        setScheduledTime('')
+      } else {
+        setError(data.error || 'Failed to schedule')
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to schedule post')
+    } finally {
+      setScheduling(false)
     }
   }
 
@@ -147,7 +188,7 @@ export function ImageGenerator() {
             <img src={image} alt="Generated" style={{ width: '100%', height: 'auto', display: 'block' }} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
             <a
               href={image}
               download="content.png"
@@ -161,7 +202,43 @@ export function ImageGenerator() {
             >
               📤 Post Now
             </button>
+            <button
+              onClick={() => setShowScheduler(!showScheduler)}
+              style={{ background: 'linear-gradient(120deg, #f59e0b, #d97706)', color: 'white', padding: '10px', borderRadius: '8px', fontWeight: 'bold', border: 'none', cursor: 'pointer', fontSize: '14px' }}
+            >
+              🕐 Schedule
+            </button>
           </div>
+
+          {showScheduler && (
+            <div style={{ padding: '16px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#cbd5e1' }}>
+                Schedule for:
+              </label>
+              <input
+                type="datetime-local"
+                value={scheduledTime}
+                onChange={(e) => setScheduledTime(e.target.value)}
+                min={new Date().toISOString().slice(0, 16)}
+                style={{ padding: '10px', background: 'rgba(15, 23, 42, 0.5)', border: '1px solid rgba(148, 163, 184, 0.2)', borderRadius: '8px', color: 'white', fontFamily: 'inherit' }}
+              />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <button
+                  onClick={schedulePost}
+                  disabled={scheduling}
+                  style={{ background: scheduling ? 'rgba(100, 100, 100, 0.3)' : 'linear-gradient(120deg, #3b82f6, #8b5cf6)', color: 'white', padding: '10px', borderRadius: '8px', fontWeight: 'bold', border: 'none', cursor: scheduling ? 'not-allowed' : 'pointer', fontSize: '14px', opacity: scheduling ? 0.5 : 1 }}
+                >
+                  {scheduling ? '⏳ Scheduling...' : '✓ Confirm'}
+                </button>
+                <button
+                  onClick={() => { setShowScheduler(false); setScheduledTime('') }}
+                  style={{ background: 'rgba(148, 163, 184, 0.1)', border: '1px solid rgba(148, 163, 184, 0.2)', color: '#cbd5e1', padding: '10px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '14px' }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
 
           <button
             onClick={() => { setCaption(''); setImage(''); }}
