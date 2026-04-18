@@ -16,50 +16,7 @@ export function generateSVGImage(caption: string, format: string, style: string)
   const colors = generateColorPalette(hash, style)
 
   // Create dynamic SVG with pseudo-unique elements based on caption
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${size.width}" height="${size.height}">
-      <defs>
-        <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:${colors[0]};stop-opacity:1" />
-          <stop offset="50%" style="stop-color:${colors[1]};stop-opacity:1" />
-          <stop offset="100%" style="stop-color:${colors[2]};stop-opacity:1" />
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-
-      <!-- Background -->
-      <rect width="${size.width}" height="${size.height}" fill="url(#mainGrad)"/>
-
-      <!-- Animated shapes based on caption hash -->
-      ${generateShapes(hash, size.width, size.height)}
-
-      <!-- Grid overlay -->
-      <defs>
-        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-        </pattern>
-      </defs>
-      <rect width="${size.width}" height="${size.height}" fill="url(#grid)" />
-
-      <!-- Text -->
-      <text x="${size.width / 2}" y="${size.height * 0.35}" text-anchor="middle" font-size="56" font-weight="bold" fill="white" font-family="Arial, sans-serif" filter="url(#glow)">
-        ${escapeXml(caption.substring(0, 40))}
-      </text>
-
-      <text x="${size.width / 2}" y="${size.height * 0.65}" text-anchor="middle" font-size="32" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif">
-        ContentForge
-      </text>
-
-      <!-- Neon border -->
-      <rect x="0" y="0" width="${size.width}" height="${size.height}" fill="none" stroke="${colors[0]}" stroke-width="3" opacity="0.3" />
-    </svg>
-  `
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size.width}" height="${size.height}"><defs><linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${colors[0]};stop-opacity:1" /><stop offset="50%" style="stop-color:${colors[1]};stop-opacity:1" /><stop offset="100%" style="stop-color:${colors[2]};stop-opacity:1" /></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="${size.width}" height="${size.height}" fill="url(#mainGrad)"/>${generateShapes(hash, size.width, size.height)}<rect width="${size.width}" height="${size.height}" fill="url(#grid)" /><text x="${size.width / 2}" y="${size.height * 0.35}" text-anchor="middle" font-size="56" font-weight="bold" fill="white" font-family="Arial, sans-serif" filter="url(#glow)">${escapeXml(caption.substring(0, 40))}</text><text x="${size.width / 2}" y="${size.height * 0.65}" text-anchor="middle" font-size="32" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif">ContentForge</text><rect x="0" y="0" width="${size.width}" height="${size.height}" fill="none" stroke="${colors[0]}" stroke-width="3" opacity="0.3" /></svg>`
 
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`
 }
@@ -69,7 +26,7 @@ function hashCaption(caption: string): number {
   for (let i = 0; i < caption.length; i++) {
     const char = caption.charCodeAt(i)
     hash = ((hash << 5) - hash) + char
-    hash = hash & hash // Convert to 32-bit integer
+    hash = hash & hash
   }
   return Math.abs(hash)
 }
@@ -120,13 +77,10 @@ function generateShapes(hash: number, width: number, height: number): string {
     const shapeType = seed % 3
 
     if (shapeType === 0) {
-      // Circle
       shapes += `<circle cx="${x}" cy="${y}" r="${size / 2}" fill="rgba(255,255,255,${opacity})" />`
     } else if (shapeType === 1) {
-      // Rectangle
       shapes += `<rect x="${x}" y="${y}" width="${size}" height="${size}" fill="rgba(255,255,255,${opacity})" />`
     } else {
-      // Polygon
       const points = `${x},${y} ${x + size},${y} ${x + size / 2},${y + size}`
       shapes += `<polygon points="${points}" fill="rgba(255,255,255,${opacity})" />`
     }
