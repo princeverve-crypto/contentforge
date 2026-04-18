@@ -1,6 +1,7 @@
 'use client'
 
 import { ImageGenerator } from '@/app/components/ImageGenerator'
+import { VideoGenerator } from '@/app/components/VideoGenerator'
 import { ScheduledPostsList } from '@/app/components/ScheduledPostsList'
 
 export default function StudioPage() {
@@ -44,9 +45,17 @@ export default function StudioPage() {
           </p>
         </div>
 
-        {/* Generator Card */}
-        <div style={{ padding: '40px', background: 'rgba(15, 24, 64, 0.4)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 0 30px rgba(0, 212, 255, 0.05)' }}>
-          <ImageGenerator />
+        {/* Generators Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px', marginBottom: '48px' }}>
+          {/* Image Generator */}
+          <div style={{ padding: '40px', background: 'rgba(15, 24, 64, 0.4)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 0 30px rgba(0, 212, 255, 0.05)' }}>
+            <ImageGenerator />
+          </div>
+
+          {/* Video Generator */}
+          <div style={{ padding: '40px', background: 'rgba(15, 24, 64, 0.4)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 0 30px rgba(255, 0, 110, 0.05)' }}>
+            <VideoGenerator />
+          </div>
         </div>
 
         {/* Scheduled Posts */}

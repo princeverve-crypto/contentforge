@@ -42,12 +42,13 @@ const agents: Record<string, AgentConfig> = {
   // Video Creation Agent
   video_gen: {
     name: "Video Creator",
-    role: "Convert images to short-form video",
-    tools: ["animatediff", "haiper-api", "ffmpeg", "ebsynth"],
+    role: "Generate short-form video from captions/images",
+    tools: ["open-sora", "animatediff", "ffmpeg"],
     model: "sonnet",
-    systemPrompt: `Video generation expert. Convert static images to engaging video.
-    Use AnimateDiff for quick generation or Haiper for quality.
-    Add music, captions, effects. Return: {success, videoUrl, duration, format}`,
+    systemPrompt: `Video generation expert. Create engaging short-form videos.
+    Priority: Open-Sora (text→video, high quality) → AnimateDiff (image→video, fast)
+    Generate 4-8 second videos optimized for TikTok/Instagram/YouTube.
+    Add motion, effects, transitions. Return: {success, videoUrl, duration, method, quality_score}`,
   },
 
   // Image Editor Agent
