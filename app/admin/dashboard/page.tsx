@@ -1,14 +1,29 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [agentStatus, setAgentStatus] = useState<any>({})
   const [messages, setMessages] = useState<any[]>([])
   const [systemHealth, setSystemHealth] = useState(0)
   const [activeAgents, setActiveAgents] = useState(0)
+  const [authorized, setAuthorized] = useState(false)
 
   useEffect(() => {
+    // Check if user has admin token
+    const adminToken = document.cookie.split('; ').find(row => row.startsWith('admin_token='))
+    if (!adminToken) {
+      router.push('/admin/login')
+      return
+    }
+    setAuthorized(true)
+  }, [router])
+
+  useEffect(() => {
+    if (!authorized) return
+
     // Simulated real-time agent status polling
     const interval = setInterval(async () => {
       try {
@@ -21,10 +36,21 @@ export default function AdminDashboard() {
       } catch (err) {
         console.error('Failed to fetch system status:', err)
       }
-    }, 1000) // Update every second
+    }, 1000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [authorized])
+
+  if (!authorized) {
+    return (
+      <main style={{ background: '#0a0e27', minHeight: '100vh', color: 'white', fontFamily: 'system-ui', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔐</div>
+          <p>Redirecting to login...</p>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main style={{ background: '#0a0e27', minHeight: '100vh', color: 'white', fontFamily: 'system-ui', position: 'relative', overflow: 'hidden' }}>
@@ -65,6 +91,15 @@ export default function AdminDashboard() {
             🧬 AGENT CONTROL CENTER
           </h1>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <button
+              onClick={() => {
+                document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC'
+                router.push('/admin/login')
+              }}
+              style={{ padding: '10px 16px', background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.5)', borderRadius: '6px', color: '#fca5a5', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
+            >
+              🔓 Logout
+            </button>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: '12px', color: '#94a3b8' }}>SYSTEM HEALTH</div>
               <div style={{ fontSize: '20px', fontWeight: '700', color: systemHealth > 80 ? '#39ff14' : systemHealth > 50 ? '#ffaa00' : '#ff006e' }}>
