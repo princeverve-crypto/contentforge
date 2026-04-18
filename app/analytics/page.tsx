@@ -1,9 +1,8 @@
 'use client'
 
-import { ImageGenerator } from '@/app/components/ImageGenerator'
-import { ScheduledPostsList } from '@/app/components/ScheduledPostsList'
+import { AnalyticsDashboard } from '@/app/components/AnalyticsDashboard'
 
-export default function StudioPage() {
+export default function AnalyticsPage() {
   return (
     <main style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)', minHeight: '100vh', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {/* Background */}
@@ -18,35 +17,31 @@ export default function StudioPage() {
           <a href="/" style={{ fontSize: '28px', fontWeight: 'bold', textDecoration: 'none', letterSpacing: '-0.5px', cursor: 'pointer' }}>
             Content<span style={{ background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Forge</span>
           </a>
-          <a href="/" style={{ fontSize: '15px', color: '#94a3b8', textDecoration: 'none', transition: 'color 0.3s', cursor: 'pointer' }}>
-            ← Back to Home
-          </a>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <a href="/studio" style={{ color: '#94a3b8', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', transition: 'all 0.3s' }}>🎬 Studio</a>
+            <a href="/settings" style={{ color: '#94a3b8', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', transition: 'all 0.3s' }}>⚙️ Settings</a>
+          </div>
         </div>
       </header>
 
       {/* Content */}
-      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '60px 24px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 24px' }}>
         {/* Title */}
         <div style={{ marginBottom: '48px' }}>
           <h1 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '16px', lineHeight: '1.2' }}>
-            Create Your
+            Performance
             <br />
             <span style={{ background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Next Viral Post
+              Analytics
             </span>
           </h1>
           <p style={{ fontSize: '16px', color: '#94a3b8', lineHeight: '1.6' }}>
-            Describe what you want. AI creates it. Post instantly to all platforms.
+            Track your content performance across all platforms. Monitor impressions, engagement, and ROI.
           </p>
         </div>
 
-        {/* Generator Card */}
-        <div style={{ padding: '40px', background: 'rgba(30, 41, 59, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)', borderRadius: '16px', backdropFilter: 'blur(10px)' }}>
-          <ImageGenerator />
-        </div>
-
-        {/* Scheduled Posts */}
-        <ScheduledPostsList />
+        {/* Analytics Dashboard */}
+        <AnalyticsDashboard />
       </div>
     </main>
   )

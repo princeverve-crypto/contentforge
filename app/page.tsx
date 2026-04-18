@@ -16,6 +16,7 @@ export default function Home() {
             Content<span style={{ background: 'linear-gradient(120deg, #3b82f6, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Forge</span>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
+            <a href="/analytics" style={{ color: '#94a3b8', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', transition: 'all 0.3s' }}>📊 Analytics</a>
             <a href="/settings" style={{ color: '#94a3b8', padding: '12px 20px', borderRadius: '8px', textDecoration: 'none', fontSize: '14px', transition: 'all 0.3s' }}>⚙️ Settings</a>
             <a href="/studio" style={{ background: 'linear-gradient(120deg, #3b82f6, #1e40af)', color: 'white', padding: '12px 24px', borderRadius: '8px', fontWeight: '600', textDecoration: 'none', fontSize: '15px', boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)', display: 'inline-block', transition: 'all 0.3s' }}>Start Creating →</a>
           </div>
