@@ -109,8 +109,6 @@ class MultiProviderRouter {
         return this.callGroq(task, input)
       case 'mistral':
         return this.callMistral(task, input)
-      case 'replicate':
-        return this.callReplicate(task, input)
       case 'stability':
         return this.callStability(task, input)
       case 'haiper':
@@ -144,11 +142,6 @@ class MultiProviderRouter {
     return { status: 'success', provider: 'mistral', data: input }
   }
 
-  private async callReplicate(task: string, input: any): Promise<any> {
-    // Implement Replicate API call
-    return { status: 'success', provider: 'replicate', data: input }
-  }
-
   private async callStability(task: string, input: any): Promise<any> {
     // Implement Stability AI API call
     return { status: 'success', provider: 'stability', data: input }
@@ -175,7 +168,6 @@ class MultiProviderRouter {
       'openrouter',
       'groq',
       'mistral',
-      'replicate',
       'stability',
       'haiper',
       'animatediff',

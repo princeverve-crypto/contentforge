@@ -11,55 +11,42 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const prompt = `Professional ${style} social media design: "${caption}". High quality, vibrant, eye-catching, modern, engaging, beautiful.`
+    const enhancedPrompt = `Professional ${style} social media design: "${caption}". High quality, vibrant, eye-catching, modern, engaging, beautiful. Optimized for ${format} format.`
 
-    console.log('Generating image with prompt:', prompt)
+    console.log('Generating image with prompt:', enhancedPrompt)
 
-    // Use Replicate FLUX (free tier available)
-    const replicateToken = process.env.REPLICATE_API_TOKEN
+    // Use OpenRouter for image generation (supports DALL-E 3, FLUX, and more)
+    const openrouterKey = process.env.OPENROUTER_KEY
 
-    if (!replicateToken) {
-      // Fallback to placeholder with better styling
-      const sizes: Record<string, { width: number; height: number }> = {
-        tiktok: { width: 1080, height: 1920 },
-        instagram: { width: 1080, height: 1920 },
-        youtube: { width: 1920, height: 1080 },
-        square: { width: 1080, height: 1080 }
-      }
-
-      const size = sizes[format] || sizes.tiktok
-
-      // Generate a gradient placeholder
-      const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233b82f6;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ec4899;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3Ctext x='50%25' y='30%25' dominant-baseline='middle' text-anchor='middle' font-size='48' font-weight='bold' fill='white' font-family='Arial'%3E${encodeURIComponent(caption.substring(0, 30))}</%3E%3C/text%3E%3Ctext x='50%25' y='70%25' dominant-baseline='middle' text-anchor='middle' font-size='32' fill='rgba(255,255,255,0.8)' font-family='Arial'%3EContentForge%3C/text%3E%3C/svg%3E`
-
-      return NextResponse.json({
-        imageUrl: placeholderUrl,
-        success: true,
-        message: 'Image generated (add REPLICATE_API_TOKEN for AI generation)'
-      })
+    if (!openrouterKey) {
+      return NextResponse.json(
+        { error: 'Image generation not configured. Add OPENROUTER_KEY.' },
+        { status: 503 }
+      )
     }
 
-    // Call Replicate FLUX API
-    const generateRes = await fetch('https://api.replicate.com/v1/predictions', {
+    // Call OpenRouter API for image generation
+    const generateRes = await fetch('https://openrouter.ai/api/v1/images/generations', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${replicateToken}`,
-        'Content-Type': 'application/json'
+        'Authorization': `Bearer ${openrouterKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://contentforge.vercel.app',
       },
       body: JSON.stringify({
-        version: 'black-forest-labs/flux-pro',
-        input: {
-          prompt: prompt,
-          image_size: format === 'youtube' ? '1920x1080' : format === 'square' ? '1080x1080' : '1080x1920'
-        }
+        model: 'openai/dall-e-3',
+        prompt: enhancedPrompt,
+        n: 1,
+        size: format === 'youtube' ? '1792x1024' : format === 'square' ? '1024x1024' : '1024x1792',
+        quality: 'hd'
       })
     })
 
     if (!generateRes.ok) {
-      const error = await generateRes.text()
-      console.error('Replicate error:', error)
-      
-      // Return placeholder on error
+      const error = await generateRes.json()
+      console.error('OpenRouter error:', error)
+
+      // Fallback to gradient placeholder with neon colors
       const sizes: Record<string, { width: number; height: number }> = {
         tiktok: { width: 1080, height: 1920 },
         instagram: { width: 1080, height: 1920 },
@@ -67,39 +54,19 @@ export async function POST(request: NextRequest) {
         square: { width: 1080, height: 1080 }
       }
       const size = sizes[format] || sizes.tiktok
-      const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233b82f6;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ec4899;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3C/svg%3E`
-      
+      const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23b537f2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3C/svg%3E`
+
       return NextResponse.json({
         imageUrl: placeholderUrl,
         success: true,
-        message: 'Generated with gradient'
+        message: 'Generated with gradient fallback'
       })
     }
 
-    const prediction = await generateRes.json()
+    const result = await generateRes.json()
 
-    // Poll for completion
-    let result = prediction
-    let attempts = 0
-    const maxAttempts = 120
-
-    while (result.status === 'processing' && attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      const checkRes = await fetch(
-        `https://api.replicate.com/v1/predictions/${prediction.id}`,
-        { headers: { 'Authorization': `Bearer ${replicateToken}` } }
-      )
-
-      if (!checkRes.ok) break
-
-      result = await checkRes.json()
-      attempts++
-      console.log(`Poll ${attempts}: ${result.status}`)
-    }
-
-    if (result.status === 'succeeded' && result.output) {
-      const imageUrl = Array.isArray(result.output) ? result.output[0] : result.output
+    if (result.data && result.data.length > 0) {
+      const imageUrl = result.data[0].url || result.data[0]
 
       return NextResponse.json({
         imageUrl,
@@ -116,7 +83,7 @@ export async function POST(request: NextRequest) {
       square: { width: 1080, height: 1080 }
     }
     const size = sizes[format] || sizes.tiktok
-    const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233b82f6;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%238b5cf6;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ec4899;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3C/svg%3E`
+    const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size.width}' height='${size.height}'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23b537f2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='${size.width}' height='${size.height}'/%3E%3C/svg%3E`
 
     return NextResponse.json({
       imageUrl: placeholderUrl,
@@ -126,7 +93,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('API error:', error)
 
-    const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920'%3E%3Crect fill='%233b82f6' width='1080' height='1920'/%3E%3Ctext x='540' y='960' dominant-baseline='middle' text-anchor='middle' font-size='48' fill='white' font-family='Arial'%3EImage Generated%3C/text%3E%3C/svg%3E`
+    const placeholderUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%23b537f2;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='1080' height='1920'/%3E%3C/svg%3E`
 
     return NextResponse.json({
       imageUrl: placeholderUrl,

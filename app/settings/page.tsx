@@ -3,7 +3,6 @@
 import { useState } from 'react'
 
 export default function SettingsPage() {
-  const [postizKey, setPostizKey] = useState('')
   const [tiktokHandle, setTiktokHandle] = useState('')
   const [instagramHandle, setInstagramHandle] = useState('')
   const [youtubeChannel, setYoutubeChannel] = useState('')
@@ -12,7 +11,6 @@ export default function SettingsPage() {
 
   function saveSettings() {
     const settings = {
-      postizKey,
       platforms: {
         tiktok: { enabled: !!tiktokHandle, handle: tiktokHandle },
         instagram: { enabled: !!instagramHandle, handle: instagramHandle },
@@ -52,25 +50,6 @@ export default function SettingsPage() {
         <p style={{ fontSize: '16px', color: '#94a3b8', marginBottom: '40px' }}>Configure your automation platform</p>
 
         <div style={{ padding: '40px', background: 'rgba(15, 24, 64, 0.4)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '16px', backdropFilter: 'blur(10px)' }}>
-          {/* Postiz API Key */}
-          <div style={{ marginBottom: '32px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#e2e8f0', marginBottom: '8px' }}>
-              Postiz API Key (Required for auto-posting)
-            </label>
-            <input
-              type="password"
-              value={postizKey}
-              onChange={(e) => setPostizKey(e.target.value)}
-              placeholder="Paste your API key here"
-              style={{ width: '100%', padding: '12px', background: 'rgba(10, 14, 39, 0.6)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '8px', color: 'white', fontSize: '14px', marginBottom: '8px', fontFamily: 'monospace' }}
-            />
-            <p style={{ fontSize: '12px', color: '#94a3b8', margin: 0 }}>
-              Get from <a href="https://platform.postiz.com/settings" target="_blank" rel="noopener noreferrer" style={{ color: '#00d4ff', textDecoration: 'underline' }}>platform.postiz.com/settings</a>
-            </p>
-          </div>
-
-          <div style={{ height: '1px', background: 'rgba(26, 40, 80, 0.3)', marginBottom: '32px' }}></div>
-
           {/* Platform Accounts */}
           <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '24px', color: '#e2e8f0' }}>Connected Accounts</h2>
 
@@ -149,11 +128,10 @@ export default function SettingsPage() {
           <div style={{ marginTop: '32px', padding: '16px', background: 'rgba(0, 212, 255, 0.08)', border: '1px solid rgba(0, 212, 255, 0.2)', borderRadius: '8px' }}>
             <p style={{ fontSize: '14px', color: '#cbd5e1', margin: 0, lineHeight: '1.6' }}>
               <strong>📌 How it works:</strong>
-              <br />1. Add your Postiz API key above
-              <br />2. Enter your social media handles
-              <br />3. Go to /studio and generate content
-              <br />4. Schedule posts for optimal times
-              <br />5. Check your social media accounts!
+              <br />1. Enter your social media handles below
+              <br />2. Go to /studio and generate content
+              <br />3. Schedule posts for optimal times
+              <br />4. Check your social media accounts for posted content!
             </p>
           </div>
         </div>

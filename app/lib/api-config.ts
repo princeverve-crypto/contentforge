@@ -61,10 +61,9 @@ export const apiConfig = {
 
   // Image Generation Models
   imageGen: {
-    primary: 'replicate', // Replicate FLUX
+    primary: 'openrouter', // OpenRouter (100+ models, no credit issues)
     fallback1: 'stability', // Stability AI
     fallback2: 'huggingface', // HF Diffusers
-    fallback3: 'openrouter', // OpenRouter multi-provider
   },
 
   // Video Generation Models
@@ -78,8 +77,8 @@ export const apiConfig = {
 // Agent-specific API routing
 export const agentApiConfig = {
   image_gen: {
-    primary: 'replicate',
-    fallbacks: ['stability', 'openrouter'],
+    primary: 'openrouter',
+    fallbacks: ['stability', 'huggingface'],
     timeout: 60000,
   },
 

@@ -29,11 +29,11 @@ const agents: Record<string, AgentConfig> = {
   image_gen: {
     name: "Image Generator",
     role: "Generate high-quality images from text prompts",
-    tools: ["replicate-api", "huggingface-diffusers", "stability-ai"],
+    tools: ["openrouter-images", "huggingface-diffusers", "stability-ai"],
     model: "sonnet",
     systemPrompt: `You are expert image generation specialist.
     Use best available model for quality. Route to:
-    - Replicate FLUX for production
+    - OpenRouter DALL-E 3 for production
     - Hugging Face for open source
     - Stability for enterprise features
     Return: {success, imageUrl, model_used, generation_time}`,
