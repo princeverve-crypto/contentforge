@@ -38,7 +38,7 @@ export default function Home() {
         <h1 style={{ fontSize: '4.5rem', fontWeight: '800', lineHeight: '1.1', marginBottom: '24px', maxWidth: '900px', margin: '0 auto 24px', animation: 'fadeIn 0.8s ease-out 0.4s both' }}>
           Create.
           <br />
-          <span style={{ background: 'linear-gradient(120deg, #00d4ff 0%, #b537f2 50%, #ff006e 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', background: 'linear-gradient(120deg, #00d4ff 0%, #b537f2 50%, #ff006e 100%)' }}>Post Everywhere.</span>
+          <span style={{ background: 'linear-gradient(120deg, #00d4ff 0%, #b537f2 50%, #ff006e 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Post Everywhere.</span>
           <br />
           Earn Instantly.
         </h1>
