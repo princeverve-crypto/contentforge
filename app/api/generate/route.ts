@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Authorization': `Bearer ${openrouterKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://contentforge.vercel.app',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'https://contentforge-flax.vercel.app',
       },
       body: JSON.stringify({
         model: 'openai/dall-e-3',
