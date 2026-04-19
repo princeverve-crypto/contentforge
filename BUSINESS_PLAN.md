@@ -1,7 +1,8 @@
 # ContentForge: Business Plan & Product Roadmap
 
-**Last Updated:** April 2025  
-**Status:** MVP Phase (Months 1-3)
+**Last Updated:** April 19, 2026  
+**Status:** MVP Phase (Months 1-3 of 2026)
+**Current Date:** April 2026 (Q2)
 
 ---
 
@@ -17,7 +18,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ---
 
-## PHASE 1: MVP (Months 1-3) ✅ IN PROGRESS
+## PHASE 1: MVP (April-June 2026) ✅ IN PROGRESS
 
 ### Core Features (Must-Have)
 
@@ -80,7 +81,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ---
 
-## PHASE 2: Early Expansion (Months 4-6)
+## PHASE 2: Early Expansion (July-Sept 2026)
 
 ### New Features
 
@@ -110,7 +111,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ---
 
-## PHASE 3: Premium Tier (Months 7-12)
+## PHASE 3: Premium Tier (Oct 2026-Mar 2027)
 
 ### Enterprise Features
 
@@ -172,7 +173,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ## GO-TO-MARKET STRATEGY
 
-### Month 1-2: Creator Community (0-100 Users)
+### April-May 2026: Creator Community (0-100 Users)
 
 **Channels:**
 - ProductHunt launch (aim for #1 Product of Day)
@@ -187,7 +188,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ---
 
-### Month 3-4: Agency Outreach (100-250 Users)
+### June-July 2026: Agency Outreach (100-250 Users)
 
 **Channels:**
 - Direct outreach to social media agencies (LinkedIn)
@@ -201,7 +202,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ---
 
-### Month 5-6: Enterprise Sales (250-500 Users)
+### Aug-Sept 2026: Enterprise Sales (250-500 Users)
 
 **Channels:**
 - Sales team hiring (2 SDRs)
@@ -217,14 +218,15 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ## FINANCIAL MODEL
 
-### Year 1 Projections
+### Year 1 Projections (2026)
 
-| Metric | Q1 2025 | Q2 2025 | Q3 2025 | Q4 2025 |
+| Metric | Q2 2026 (now) | Q3 2026 | Q4 2026 | Q1 2027 |
 |--------|---------|---------|---------|---------|
 | Users | 100 | 350 | 800 | 1,500 |
 | Avg Revenue per User | $12 | $18 | $25 | $28 |
 | MRR | $1,200 | $6,300 | $20K | $42K |
 | ARR | $14.4K | $75.6K | $240K | $504K |
+| **Elapsed** | **Now** | **+3mo** | **+6mo** | **+9mo** |
 | **LTV (36 months)** | **$432** | **$648** | **$900** | **$1,008** |
 | **CAC (paid channels)** | **$15** | **$20** | **$25** | **$30** |
 | **Payback (months)** | **0.6** | **1.2** | **1.0** | **1.1** |
@@ -237,13 +239,13 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 - **Team** (2 engineers, 1 PM, 1 ops): $200K
 - **Total OpEx**: $320K
 
-**Profitability:** Break-even at ~$27K MRR (Sept 2025)
+**Profitability:** Break-even at ~$27K MRR (Sept 2026 / Q3 2026)
 
 ---
 
 ## FUNDING & MILESTONES
 
-### Series Seed (Q2 2025) - $500K Goal
+### Series Seed (Q3 2026) - $500K Goal
 
 **Use of Funds:**
 - Product development: $200K (2 senior engineers)
@@ -251,7 +253,7 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 - Infrastructure: $75K (Anthropic/OpenAI API costs)
 - Operations: $75K (salaries, legal, tools)
 
-**Milestones to Hit:**
+**Milestones to Hit (by Sept 2026):**
 - [ ] 500+ paid customers
 - [ ] $15K+ MRR
 - [ ] 95%+ uptime
@@ -261,25 +263,25 @@ ContentForge solves the #1 problem in AI content tools: **generic, inauthentic A
 
 ## PRODUCT ROADMAP (High-Level)
 
-### MVP (✅ Months 1-3)
+### MVP (✅ April-June 2026)
 - Basic AI generation
 - Scheduling to 5 platforms
 - Demo auth
 - Basic analytics
 
-### V1 (Months 4-6)
+### V1 (July-Sept 2026)
 - Custom AI training
 - 10+ platform support
 - Team collaboration
 - Revenue sharing
 
-### V2 (Months 7-12)
+### V2 (Oct 2026-Mar 2027)
 - Enterprise white-label
 - Advanced API
 - Predictive analytics
 - TikTok Shop integration
 
-### V3 (Year 2)
+### V3 (2027+)
 - Full automation (posting + optimization)
 - Marketplace (buy/sell content templates)
 - Creator fund ($1M/year payouts)
@@ -316,6 +318,6 @@ ContentForge enters a $50B market with authentic AI as its differentiator. By fo
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** April 19, 2025  
-**Next Review:** May 19, 2025
+**Document Version:** 1.1 (Corrected for 2026)  
+**Last Updated:** April 19, 2026  
+**Next Review:** May 19, 2026
