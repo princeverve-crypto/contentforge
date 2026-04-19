@@ -20,6 +20,7 @@ export default function LoginPage() {
       const response = await fetch('/api/auth/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           email: 'demo@contentforge.app',
           name: 'Demo User',
