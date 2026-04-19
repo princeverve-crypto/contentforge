@@ -1,8 +1,6 @@
 'use client'
 
-import { ImageGenerator } from '@/app/components/ImageGenerator'
-import { VideoGenerator } from '@/app/components/VideoGenerator'
-import { ScheduledPostsList } from '@/app/components/ScheduledPostsList'
+import { QuickDashboard } from '@/app/components/QuickDashboard'
 
 export default function StudioPage() {
   return (
@@ -30,37 +28,7 @@ export default function StudioPage() {
       </header>
 
       {/* Content */}
-      <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '60px 24px' }}>
-        {/* Title */}
-        <div style={{ marginBottom: '48px' }}>
-          <h1 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '16px', lineHeight: '1.2' }}>
-            Create Your
-            <br />
-            <span style={{ background: 'linear-gradient(120deg, #00d4ff, #b537f2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Next Viral Post
-            </span>
-          </h1>
-          <p style={{ fontSize: '16px', color: '#cbd5e1', lineHeight: '1.6' }}>
-            AI generates stunning content. Schedule it. Track performance. Scale your empire.
-          </p>
-        </div>
-
-        {/* Generators Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px', marginBottom: '48px' }}>
-          {/* Image Generator */}
-          <div style={{ padding: '40px', background: 'rgba(15, 24, 64, 0.4)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 0 30px rgba(0, 212, 255, 0.05)' }}>
-            <ImageGenerator />
-          </div>
-
-          {/* Video Generator */}
-          <div style={{ padding: '40px', background: 'rgba(15, 24, 64, 0.4)', border: '1px solid rgba(26, 40, 80, 0.4)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 0 30px rgba(255, 0, 110, 0.05)' }}>
-            <VideoGenerator />
-          </div>
-        </div>
-
-        {/* Scheduled Posts */}
-        <ScheduledPostsList />
-      </div>
+      <QuickDashboard />
 
       <style>{`
         @keyframes float {
