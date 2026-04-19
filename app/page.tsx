@@ -1,7 +1,7 @@
 'use client'
 
-import WorldClassHero from './components/WorldClassHero'
+import HomePage from './components/HomePage'
 
 export default function Home() {
-  return <WorldClassHero />
+  return <HomePage />
 }

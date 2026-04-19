@@ -10,21 +10,19 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  async function handleGoogleLogin() {
+  async function handleDemoLogin() {
     setLoading(true)
     setError('')
 
     try {
-      // In production: use Google OAuth library (next-auth, Auth0, etc.)
-      // For MVP: demo login with email
       const response = await fetch('/api/auth/google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          email: 'demo@contentforge.app',
+          email: email || 'demo@contentforge.app',
           name: 'Demo User',
-          provider: 'google'
+          provider: 'email'
         })
       })
 
@@ -98,15 +96,15 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Google Login */}
+          {/* Demo Login */}
           <button
-            onClick={handleGoogleLogin}
+            onClick={handleDemoLogin}
             disabled={loading}
             style={{
               width: '100%',
               padding: '14px',
-              background: loading ? 'rgba(100, 100, 100, 0.3)' : 'linear-gradient(120deg, #ffffff, #f0f0f0)',
-              color: '#0a0e27',
+              background: loading ? 'rgba(100, 100, 100, 0.3)' : 'linear-gradient(120deg, #9333ea, #ec4899)',
+              color: 'white',
               border: 'none',
               borderRadius: '8px',
               fontWeight: '600',
@@ -120,7 +118,7 @@ export default function LoginPage() {
               opacity: loading ? 0.5 : 1
             }}
           >
-            🔵 {loading ? 'Signing in...' : 'Sign in with Google'}
+            ⚡ {loading ? 'Signing in...' : 'Start with Demo Access'}
           </button>
 
           {/* Divider */}
@@ -187,7 +185,7 @@ export default function LoginPage() {
 
           {/* Demo Note */}
           <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '24px', textAlign: 'center' }}>
-            Demo mode: Click Google or enter any email to access
+            ✓ Instant access: No credit card needed. Click "Start with Demo Access" or enter your email above.
           </p>
         </div>
 
