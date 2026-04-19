@@ -2,11 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: [
-      'contentforge.netlify.app',
-      'contentforge-flax.vercel.app',
-      'openrouter.ai',
-      'localhost:3000'
+    remotePatterns: [
+      { protocol: 'https', hostname: 'contentforge.netlify.app' },
+      { protocol: 'https', hostname: 'contentforge-flax.vercel.app' },
+      { protocol: 'https', hostname: 'openrouter.ai' },
+      { protocol: 'http', hostname: 'localhost', port: '3000' }
     ]
   },
   // Netlify serverless function configuration
