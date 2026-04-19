@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Global CSS - No Tailwind directives to avoid PostCSS dependency issues */
 
 * {
   margin: 0;
